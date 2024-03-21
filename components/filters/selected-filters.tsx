@@ -59,7 +59,7 @@ export function SelectedFilters({
             className="h-full pl-1"
           >
             <div className="mr-2 flex aspect-square h-full items-center justify-center rounded-full bg-btn-dark">
-              <Trash2 className="h-4 w-4 text-icon-red" />
+              <Trash2 className="size-4 text-icon-red" />
             </div>
             Clear
           </Button>

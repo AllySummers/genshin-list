@@ -51,7 +51,7 @@ const DropdownMenuTrigger = React.forwardRef<
     >
       {children}
     </span>
-    <Icons.dropdown className="h-7 w-7" />
+    <Icons.dropdown className="size-7" />
   </Listbox.Button>
 ));
 DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
@@ -123,7 +123,7 @@ const DropdownMenuItem = React.forwardRef<
     >
       <div
         className={cn(
-          "relative flex h-full w-full items-center justify-between rounded-full px-3 transition-colors duration-75",
+          "relative flex size-full items-center justify-between rounded-full px-3 transition-colors duration-75",
           "ui-active:bg-secondary-hover ui-active:active:bg-primary ui-active:active:text-primary-foreground",
           innerClassName,
         )}
@@ -131,8 +131,8 @@ const DropdownMenuItem = React.forwardRef<
         {children}
         <Check
           className={cn(
-            "hidden h-6 w-6 ui-selected:flex",
-            size === "small" && "h-5 w-5",
+            "hidden size-6 ui-selected:flex",
+            size === "small" && "size-5",
             checkClassName,
           )}
           strokeWidth={4}
