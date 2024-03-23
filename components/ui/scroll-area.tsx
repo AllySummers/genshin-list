@@ -1,17 +1,17 @@
 'use client';
 
-import ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
+import { ScrollAreaScrollbar, Root, Viewport, Corner, ScrollAreaThumb } from '@radix-ui/react-scroll-area';
 import React, { forwardRef, type ComponentPropsWithoutRef, type ElementRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
 const ScrollBar = forwardRef<
-  ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
-  ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
+  ElementRef<typeof ScrollAreaScrollbar>,
+  ComponentPropsWithoutRef<typeof ScrollAreaScrollbar> & {
     thumbClassName?: string;
   }
 >(({ className, thumbClassName, orientation = 'vertical', ...props }, ref) => (
-  <ScrollAreaPrimitive.ScrollAreaScrollbar
+  <ScrollAreaScrollbar
     ref={ref}
     orientation={orientation}
     className={cn(
@@ -22,26 +22,26 @@ const ScrollBar = forwardRef<
     )}
     {...props}
   >
-    <ScrollAreaPrimitive.ScrollAreaThumb
+    <ScrollAreaThumb
       className={cn('relative flex-1 rounded-full border border-primary/75 bg-primary/75', thumbClassName)}
     />
-  </ScrollAreaPrimitive.ScrollAreaScrollbar>
+  </ScrollAreaScrollbar>
 ));
-ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
+ScrollBar.displayName = ScrollAreaScrollbar.displayName;
 
 const ScrollArea = forwardRef<
-  ElementRef<typeof ScrollAreaPrimitive.Root>,
-  ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
+  ElementRef<typeof Root>,
+  ComponentPropsWithoutRef<typeof Root> & {
     scrollbarClassName?: string;
     thumbClassName?: string;
   }
 >(({ className, scrollbarClassName, thumbClassName, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
-    <ScrollAreaPrimitive.Viewport className="size-full rounded-[inherit]">{children}</ScrollAreaPrimitive.Viewport>
+  <Root ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
+    <Viewport className="size-full rounded-[inherit]">{children}</Viewport>
     <ScrollBar className={scrollbarClassName} thumbClassName={thumbClassName} />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
+    <Corner />
+  </Root>
 ));
-ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
+ScrollArea.displayName = Root.displayName;
 
 export { ScrollArea, ScrollBar };

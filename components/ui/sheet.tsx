@@ -1,6 +1,6 @@
 'use client';
 
-import SheetPrimitive from '@radix-ui/react-dialog';
+import { Close, Content, Description, Overlay, Portal, Root, Title, Trigger } from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
 import React, { forwardRef, type ComponentPropsWithoutRef, type ElementRef, type HTMLAttributes } from 'react';
 
@@ -9,28 +9,27 @@ import type { buttonVariants } from '@/components/ui/button';
 import { CircleButton } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const Sheet = SheetPrimitive.Root;
+const Sheet = Root;
 
-const SheetTrigger = SheetPrimitive.Trigger;
+const SheetTrigger = Trigger;
 
-const SheetClose = SheetPrimitive.Close;
+const SheetClose = Close;
 
-const SheetPortal = SheetPrimitive.Portal;
+const SheetPortal = Portal;
 
-const SheetOverlay = forwardRef<
-  ElementRef<typeof SheetPrimitive.Overlay>,
-  ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Overlay
-    className={cn(
-      'fixed inset-0 z-50 bg-background/50 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-      className
-    )}
-    {...props}
-    ref={ref}
-  />
-));
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
+const SheetOverlay = forwardRef<ElementRef<typeof Overlay>, ComponentPropsWithoutRef<typeof Overlay>>(
+  ({ className, ...props }, ref) => (
+    <Overlay
+      className={cn(
+        'fixed inset-0 z-50 bg-background/50 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        className
+      )}
+      {...props}
+      ref={ref}
+    />
+  )
+);
+SheetOverlay.displayName = Overlay.displayName;
 
 const sheetVariants = cva(
   'fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out',
@@ -57,29 +56,29 @@ const sheetVariants = cva(
 );
 
 interface SheetContentProps
-  extends ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+  extends ComponentPropsWithoutRef<typeof Content>,
     VariantProps<typeof sheetVariants>,
     VariantProps<typeof buttonVariants> {
   closeClassName?: string;
 }
 
-const SheetContent = forwardRef<ElementRef<typeof SheetPrimitive.Content>, SheetContentProps>(
+const SheetContent = forwardRef<ElementRef<typeof Content>, SheetContentProps>(
   ({ side = 'right', className, closeClassName, children, variant, ...props }, ref) => (
     <SheetPortal>
       <SheetOverlay />
-      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+      <Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
         {children}
-        <SheetPrimitive.Close asChild className={cn('absolute right-4 top-4', closeClassName)}>
+        <Close asChild className={cn('absolute right-4 top-4', closeClassName)}>
           <CircleButton variant={variant}>
             <GenshinCloseIcon className="size-9" />
             <span className="sr-only">Close</span>
           </CircleButton>
-        </SheetPrimitive.Close>
-      </SheetPrimitive.Content>
+        </Close>
+      </Content>
     </SheetPortal>
   )
 );
-SheetContent.displayName = SheetPrimitive.Content.displayName;
+SheetContent.displayName = Content.displayName;
 
 const SheetHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('flex flex-col text-center sm:text-left', className)} {...props} />
@@ -91,21 +90,19 @@ const SheetFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =>
 );
 SheetFooter.displayName = 'SheetFooter';
 
-const SheetTitle = forwardRef<
-  ElementRef<typeof SheetPrimitive.Title>,
-  ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title ref={ref} className={cn('text-lg font-semibold text-foreground', className)} {...props} />
-));
-SheetTitle.displayName = SheetPrimitive.Title.displayName;
+const SheetTitle = forwardRef<ElementRef<typeof Title>, ComponentPropsWithoutRef<typeof Title>>(
+  ({ className, ...props }, ref) => (
+    <Title ref={ref} className={cn('text-lg font-semibold text-foreground', className)} {...props} />
+  )
+);
+SheetTitle.displayName = Title.displayName;
 
-const SheetDescription = forwardRef<
-  ElementRef<typeof SheetPrimitive.Description>,
-  ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Description ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
-));
-SheetDescription.displayName = SheetPrimitive.Description.displayName;
+const SheetDescription = forwardRef<ElementRef<typeof Description>, ComponentPropsWithoutRef<typeof Description>>(
+  ({ className, ...props }, ref) => (
+    <Description ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
+  )
+);
+SheetDescription.displayName = Description.displayName;
 
 export {
   Sheet,
