@@ -50,21 +50,21 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    // suppressHydrationWarning: next-themes adds extra attributes: class, style for light and dark mode
-    <html lang="en" className={genshinFont.className} suppressHydrationWarning>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <div className="relative flex flex-col gap-6">
-            <div className="flex min-h-screen flex-col">
-              <Navbar />
-              <CharacterProvider>{children}</CharacterProvider>
-            </div>
-            <Footer />
+const RootLayout = ({ children }: RootLayoutProps) => (
+  // suppressHydrationWarning: next-themes adds extra attributes: class, style for light and dark mode
+  <html lang="en" className={genshinFont.className} suppressHydrationWarning>
+    <body>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <div className="relative flex flex-col gap-6">
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <CharacterProvider>{children}</CharacterProvider>
           </div>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
+          <Footer />
+        </div>
+      </ThemeProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;

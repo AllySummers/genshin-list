@@ -15,8 +15,9 @@ export const SectionRow = ({ talent, children }: SectionRowProps) => (
     </div>
     <div
       className="mt-2 text-section-foreground/75"
+      // talent description is sanitized in backend/markdown
+      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
-        // talent description is sanitized in backend/markdown
         __html: talent.description
       }}
     />

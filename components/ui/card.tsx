@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import Image, { type ImageProps } from 'next/image';
-import * as React from 'react';
+import React from 'react';
 
 import { cn } from '@/lib/utils';
 import CardBG from '@/public/images/card-bg.png';

@@ -13,9 +13,13 @@ interface FilterButtonProps {
 }
 
 export const FilterButton = ({ attr, category, attrFilter, setAttrFilter }: FilterButtonProps) => {
-  const handleFilter = (attr: FilterAttribute) => {
+  const handleFilter = (filterAttr: FilterAttribute) => {
     const newSet = new Set<FilterAttribute>(attrFilter[category]);
-    newSet.has(attr) ? newSet.delete(attr) : newSet.add(attr);
+    if (newSet.has(filterAttr)) {
+      newSet.delete(filterAttr);
+    } else {
+      newSet.add(filterAttr);
+    }
 
     setAttrFilter({ ...attrFilter, [category]: newSet });
   };

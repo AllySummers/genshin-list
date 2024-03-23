@@ -15,40 +15,28 @@ import { getNamePageProps } from '@/data/retrieve';
 import type { Character, CharacterRarity } from '@/data/types';
 import { formatImageUrl, formatLocalImageUrl, formatNameUrl, unformatNameUrl } from '@/lib/utils';
 
-export default function CharacterPage({ params: { name } }: PageProps) {
-  const { character, talents, constellations } = getNamePageProps(unformatNameUrl(name));
-
-  return (
-    <main className="relative flex flex-col gap-8 sm:overflow-hidden">
-      <HeroSection character={character} />
-      <div className="grid gap-8 sm:container">
-        <AttributeSection character={character} className="lg:hidden" />
-        <MaterialCalculatorSection name={character.name} weekdays={character.weekdays} />
-        <AscensionSection stats={character.stats} />
-        <ActiveTalentSection actives={talents.actives} />
-        <PassiveTalentSection passives={talents.passives} />
-        <ConstellationSection constellations={constellations} />
-      </div>
-    </main>
-  );
+interface CharacterBadgeProps {
+  text: string;
 }
 
-interface HeroSectionProps {
-  character: Character;
+const CharacterBadge = ({ text }: CharacterBadgeProps) => (
+  <div className="rounded bg-zinc-300/50 px-2 py-1 text-xs dark:bg-zinc-700/70 md:backdrop-blur-sm">{text}</div>
+);
+
+interface StarRatingProps {
+  rarity: CharacterRarity;
 }
 
-const HeroSection = ({ character }: HeroSectionProps) => (
-  <div className="sm:container md:grid">
-    <div className="col-span-full row-span-full overflow-hidden sm:overflow-visible md:flex md:items-center md:justify-center md:overflow-hidden">
-      <div className="relative -left-1/4 -z-10 flex w-[150%] flex-col items-center justify-center md:left-0 md:w-full">
-        <Image src={formatImageUrl(character.gachaSplash)} alt={character.name} width={1920} height={960} priority />
-        <div className="absolute bottom-0 z-0 h-24 w-full bg-gradient-to-t from-background" />
-      </div>
-    </div>
-    <DetailHeader character={character} />
-    <div className="col-span-full row-span-full row-start-2 ml-auto hidden max-w-md items-center justify-center gap-2 lg:flex">
-      <AttributeSection character={character} className="bg-section/80 p-3 backdrop-blur-lg" />
-    </div>
+const StarRating = ({ rarity }: StarRatingProps) => (
+  <div className="flex flex-nowrap gap-0.5">
+    {[...Array(Number(rarity))].map((_, i) => (
+      <IconImage
+        key={`star-${i}`}
+        src={formatLocalImageUrl('/', 'star-rating')}
+        alt="Star rating"
+        className="size-[1.125rem]"
+      />
+    ))}
   </div>
 );
 
@@ -83,28 +71,22 @@ const DetailHeader = ({ character }: DetailHeaderProps) => (
   </div>
 );
 
-interface CharacterBadgeProps {
-  text: string;
+interface HeroSectionProps {
+  character: Character;
 }
 
-const CharacterBadge = ({ text }: CharacterBadgeProps) => (
-  <div className="rounded bg-zinc-300/50 px-2 py-1 text-xs dark:bg-zinc-700/70 md:backdrop-blur-sm">{text}</div>
-);
-
-interface StarRatingProps {
-  rarity: CharacterRarity;
-}
-
-const StarRating = ({ rarity }: StarRatingProps) => (
-  <div className="flex flex-nowrap gap-0.5">
-    {[...Array(Number(rarity))].map((_, i) => (
-      <IconImage
-        key={`star-${i}`}
-        src={formatLocalImageUrl('/', 'star-rating')}
-        alt="Star rating"
-        className="size-[1.125rem]"
-      />
-    ))}
+const HeroSection = ({ character }: HeroSectionProps) => (
+  <div className="sm:container md:grid">
+    <div className="col-span-full row-span-full overflow-hidden sm:overflow-visible md:flex md:items-center md:justify-center md:overflow-hidden">
+      <div className="relative -left-1/4 -z-10 flex w-[150%] flex-col items-center justify-center md:left-0 md:w-full">
+        <Image src={formatImageUrl(character.gachaSplash)} alt={character.name} width={1920} height={960} priority />
+        <div className="absolute bottom-0 z-0 h-24 w-full bg-gradient-to-t from-background" />
+      </div>
+    </div>
+    <DetailHeader character={character} />
+    <div className="col-span-full row-span-full row-start-2 ml-auto hidden max-w-md items-center justify-center gap-2 lg:flex">
+      <AttributeSection character={character} className="bg-section/80 p-3 backdrop-blur-lg" />
+    </div>
   </div>
 );
 
@@ -114,10 +96,13 @@ interface PageProps {
   params: { name: string };
 }
 
-export async function generateMetadata({ params: { name } }: PageProps, parent: ResolvingMetadata): Promise<Metadata> {
+export const generateMetadata = async (
+  { params: { name } }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> => {
   const { character } = getNamePageProps(name.replace(/-/g, ' '));
   // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
+  const previousImages = (await parent).openGraph?.images ?? [];
 
   return {
     title: character.name,
@@ -126,16 +111,31 @@ export async function generateMetadata({ params: { name } }: PageProps, parent: 
       images: [...previousImages]
     }
   };
-}
+};
 
 export const dynamicParams = false;
 
-export async function generateStaticParams() {
-  const characters = getCharacterNames();
-
-  const paths = characters.map((character) => ({
+export const generateStaticParams = () =>
+  getCharacterNames().map((character) => ({
     name: formatNameUrl(character)
   }));
 
-  return paths;
-}
+const CharacterPage = ({ params: { name } }: PageProps) => {
+  const { character, talents, constellations } = getNamePageProps(unformatNameUrl(name));
+
+  return (
+    <main className="relative flex flex-col gap-8 sm:overflow-hidden">
+      <HeroSection character={character} />
+      <div className="grid gap-8 sm:container">
+        <AttributeSection character={character} className="lg:hidden" />
+        <MaterialCalculatorSection name={character.name} weekdays={character.weekdays} />
+        <AscensionSection stats={character.stats} />
+        <ActiveTalentSection actives={talents.actives} />
+        <PassiveTalentSection passives={talents.passives} />
+        <ConstellationSection constellations={constellations} />
+      </div>
+    </main>
+  );
+};
+
+export default CharacterPage;

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 
 import { FilterButton } from '@/components/filters/filter-button';
 import { SelectedFilters } from '@/components/filters/selected-filters';
@@ -21,6 +21,35 @@ import { CHARACTER_RARITIES, ELEMENTS, REGIONS, WEAPONS } from '@/data/constants
 import type { FilterAttribute, FilterAttributes } from '@/data/types';
 import { useAttrFilter } from '@/hooks/use-characters';
 import { isEqualSets } from '@/lib/utils';
+
+interface FilterContainerProps {
+  category: keyof FilterAttributes;
+  attrData: Readonly<FilterAttribute[]>;
+  attrFilter: FilterAttributes;
+  setAttrFilter: (attrFilter: FilterAttributes) => void;
+}
+
+const FilterContainer = ({ category, attrData, attrFilter, setAttrFilter }: FilterContainerProps) => (
+  <div>
+    <span className="text-xl capitalize text-[#BBB9B2] md:text-2xl">{category}</span>
+    <div className="mt-5 grid grid-cols-3 gap-3">
+      {attrData.map((attr) => (
+        <FilterButton
+          key={attr}
+          attr={attr}
+          category={category}
+          attrFilter={attrFilter}
+          setAttrFilter={setAttrFilter}
+        />
+      ))}
+    </div>
+  </div>
+);
+
+function isEqualFilters(aFilters: FilterAttributes, bFilters: FilterAttributes) {
+  const filterKeys = Object.keys(aFilters) as Array<keyof FilterAttributes>;
+  return filterKeys.every((key) => isEqualSets(aFilters[key], bFilters[key]));
+}
 
 interface FilterSheetProps {
   className?: string;
@@ -107,32 +136,3 @@ export const FilterSheet = ({ className }: FilterSheetProps) => {
     </Sheet>
   );
 };
-
-interface FilterContainerProps {
-  category: keyof FilterAttributes;
-  attrData: Readonly<FilterAttribute[]>;
-  attrFilter: FilterAttributes;
-  setAttrFilter: (attrFilter: FilterAttributes) => void;
-}
-
-const FilterContainer = ({ category, attrData, attrFilter, setAttrFilter }: FilterContainerProps) => (
-  <div>
-    <span className="text-xl capitalize text-[#BBB9B2] md:text-2xl">{category}</span>
-    <div className="mt-5 grid grid-cols-3 gap-3">
-      {attrData.map((attr) => (
-        <FilterButton
-          key={attr}
-          attr={attr}
-          category={category}
-          attrFilter={attrFilter}
-          setAttrFilter={setAttrFilter}
-        />
-      ))}
-    </div>
-  </div>
-);
-
-function isEqualFilters(aFilters: FilterAttributes, bFilters: FilterAttributes) {
-  const filterKeys = Object.keys(aFilters) as Array<keyof FilterAttributes>;
-  return filterKeys.every((key) => isEqualSets(aFilters[key], bFilters[key]));
-}

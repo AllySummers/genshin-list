@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 
 import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
@@ -26,22 +26,51 @@ import {
   useTalentOptions
 } from '@/hooks/use-materials';
 
-export const LevelRangeSelector = () => {
-  const levelOptions = useLevelOptions();
-  const [levelMin, setLevelMin] = useLevelMin();
-  const [levelMax, setLevelMax] = useLevelMax();
+interface CalculatorDropdownProps {
+  curValue: number;
+  setValue: React.Dispatch<React.SetStateAction<number>>;
+  options: Array<DropdownOption<number>>;
+  className?: string;
+}
+
+const CalculatorDropdown = ({ curValue, setValue, options, className }: CalculatorDropdownProps) => {
+  const selectedOption = options[curValue]!;
 
   return (
-    <RangeSelector
-      title="Level"
-      min={levelMin}
-      max={levelMax}
-      setMin={setLevelMin}
-      setMax={setLevelMax}
-      options={levelOptions}
-    />
+    <DropdownMenu value={selectedOption.value} onChange={setValue} className={className}>
+      <DropdownMenuTrigger size="small">{selectedOption.label}</DropdownMenuTrigger>
+      <DropdownMenuContent scrollable>
+        {options.map((option) => (
+          <DropdownMenuItem key={option.value} value={option.value} size="small">
+            <span className="flex items-center">{option.label}</span>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
+
+interface RangeSelectorProps {
+  title: string;
+  min: number;
+  max: number;
+  setMin: React.Dispatch<React.SetStateAction<number>>;
+  setMax: React.Dispatch<React.SetStateAction<number>>;
+  options: Array<DropdownOption<number>>;
+}
+
+const RangeSelector = ({ title, min, max, setMin, setMax, options }: RangeSelectorProps) => (
+  <div className="w-full">
+    <h3 className="mb-1">{title}</h3>
+    <div className="grid grid-cols-[1fr_24px_1fr] items-center justify-center gap-2">
+      <CalculatorDropdown curValue={min} setValue={setMin} options={options} />
+      <div className="flex w-full items-center justify-center text-gray-600">
+        <Icons.rightarrow className="size-6 min-w-6" />
+      </div>
+      <CalculatorDropdown curValue={max} setValue={setMax} options={options} />
+    </div>
+  </div>
+);
 
 export const AttackRangeSelector = () => {
   const talentOptions = useTalentOptions();
@@ -110,48 +139,19 @@ export const RangeTemplateSelector = () => {
   );
 };
 
-interface RangeSelectorProps {
-  title: string;
-  min: number;
-  max: number;
-  setMin: React.Dispatch<React.SetStateAction<number>>;
-  setMax: React.Dispatch<React.SetStateAction<number>>;
-  options: Array<DropdownOption<number>>;
-}
-
-const RangeSelector = ({ title, min, max, setMin, setMax, options }: RangeSelectorProps) => (
-  <div className="w-full">
-    <h3 className="mb-1">{title}</h3>
-    <div className="grid grid-cols-[1fr_24px_1fr] items-center justify-center gap-2">
-      <CalculatorDropdown curValue={min} setValue={setMin} options={options} />
-      <div className="flex w-full items-center justify-center text-gray-600">
-        <Icons.rightarrow className="size-6 min-w-6" />
-      </div>
-      <CalculatorDropdown curValue={max} setValue={setMax} options={options} />
-    </div>
-  </div>
-);
-
-interface CalculatorDropdownProps {
-  curValue: number;
-  setValue: React.Dispatch<React.SetStateAction<number>>;
-  options: Array<DropdownOption<number>>;
-  className?: string;
-}
-
-const CalculatorDropdown = ({ curValue, setValue, options, className }: CalculatorDropdownProps) => {
-  const selectedOption = options[curValue]!;
+export const LevelRangeSelector = () => {
+  const levelOptions = useLevelOptions();
+  const [levelMin, setLevelMin] = useLevelMin();
+  const [levelMax, setLevelMax] = useLevelMax();
 
   return (
-    <DropdownMenu value={selectedOption.value} onChange={setValue} className={className}>
-      <DropdownMenuTrigger size="small">{selectedOption.label}</DropdownMenuTrigger>
-      <DropdownMenuContent scrollable>
-        {options.map((option) => (
-          <DropdownMenuItem key={option.value} value={option.value} size="small">
-            <span className="flex items-center">{option.label}</span>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <RangeSelector
+      title="Level"
+      min={levelMin}
+      max={levelMax}
+      setMin={setLevelMin}
+      setMax={setLevelMax}
+      options={levelOptions}
+    />
   );
 };

@@ -7,24 +7,6 @@ import { Section, SectionContent, SectionHeader } from '@/components/ui/section'
 import { Separator } from '@/components/ui/separator';
 import type { Active } from '@/data/types';
 
-interface ActiveTalentSectionProps {
-  actives: Active[];
-}
-
-export const ActiveTalentSection = ({ actives }: ActiveTalentSectionProps) => (
-  <Section className="overflow-hidden">
-    <SectionHeader>Active Talents</SectionHeader>
-    <Separator className="my-4" invert />
-    <SectionContent>
-      {actives.map((activeTalent) => (
-        <SectionRow talent={activeTalent} key={activeTalent.name}>
-          <ActiveTalentAttributes talent={activeTalent} />
-        </SectionRow>
-      ))}
-    </SectionContent>
-  </Section>
-);
-
 interface ActiveTalentAttributesProps {
   talent: Active;
 }
@@ -49,3 +31,21 @@ const ActiveTalentAttributes = ({ talent }: ActiveTalentAttributesProps) => {
     </CollapsibleWithState>
   );
 };
+
+interface ActiveTalentSectionProps {
+  actives: Active[];
+}
+
+export const ActiveTalentSection = ({ actives }: ActiveTalentSectionProps) => (
+  <Section className="overflow-hidden">
+    <SectionHeader>Active Talents</SectionHeader>
+    <Separator className="my-4" invert />
+    <SectionContent>
+      {actives.map((activeTalent) => (
+        <SectionRow talent={activeTalent} key={activeTalent.name}>
+          <ActiveTalentAttributes talent={activeTalent} />
+        </SectionRow>
+      ))}
+    </SectionContent>
+  </Section>
+);

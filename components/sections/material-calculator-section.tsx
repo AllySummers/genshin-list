@@ -11,6 +11,15 @@ import { Section, SectionContent, SectionHeader } from '@/components/ui/section'
 import { Separator } from '@/components/ui/separator';
 import type { Weekday } from '@/data/types';
 
+const DaysOfWeek = ({ weekdays }: { weekdays: Weekday[] }) => (
+  <div className="mb-4 flex justify-center lg:mb-1 lg:justify-start">
+    <span className="">
+      Talents: {/*comment is to leave space*/}
+      <span className="text-muted-foreground">{weekdays.join(', ')}</span>
+    </span>
+  </div>
+);
+
 interface MaterialCalculatorSectionProps {
   name: string;
   weekdays: Weekday[];
@@ -38,13 +47,4 @@ export const MaterialCalculatorSection = ({ name, weekdays }: MaterialCalculator
       </SectionContent>
     </Section>
   </MaterialProvider>
-);
-
-const DaysOfWeek = ({ weekdays }: { weekdays: Weekday[] }) => (
-  <div className="mb-4 flex justify-center lg:mb-1 lg:justify-start">
-    <span className="">
-      Talents: {/*comment is to leave space*/}
-      <span className="text-muted-foreground">{weekdays.join(', ')}</span>
-    </span>
-  </div>
 );

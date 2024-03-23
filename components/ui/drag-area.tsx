@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ScrollContainer } from 'react-indiana-drag-scroll';
 
 import 'react-indiana-drag-scroll/dist/style.css';

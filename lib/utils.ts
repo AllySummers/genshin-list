@@ -65,6 +65,6 @@ export function isEqualSets(a: Set<unknown>, b: Set<unknown>) {
   return Array.from(a).every((x) => b.has(x));
 }
 
-export function pick<T extends {}, K extends keyof T>(obj: T, ...keys: K[]) {
+export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
   return Object.fromEntries(keys.filter((key) => key in obj).map((key) => [key, obj[key]])) as Pick<T, K>;
 }

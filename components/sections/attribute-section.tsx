@@ -4,6 +4,18 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/u
 import type { Character } from '@/data/types';
 import { cn } from '@/lib/utils';
 
+interface AttrRowProps {
+  title: string;
+  info: string;
+}
+
+const AttrRow = ({ title, info }: AttrRowProps) => (
+  <TableRow>
+    <TableHead scope="row">{title}</TableHead>
+    <TableCell className="text-right">{info}</TableCell>
+  </TableRow>
+);
+
 interface AttributeSectionProps {
   character: Character;
   className?: string;
@@ -28,16 +40,4 @@ export const AttributeSection = ({ character, className }: AttributeSectionProps
       </Table>
     </SectionContent>
   </Section>
-);
-
-interface AttrRowProps {
-  title: string;
-  info: string;
-}
-
-const AttrRow = ({ title, info }: AttrRowProps) => (
-  <TableRow>
-    <TableHead scope="row">{title}</TableHead>
-    <TableCell className="text-right">{info}</TableCell>
-  </TableRow>
 );

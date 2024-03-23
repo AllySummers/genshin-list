@@ -1,23 +1,23 @@
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-import type { Item } from "@/backend/schema";
-import type { AllMaterialInfo } from "@/data/types";
-import { sortStringAsNumber } from "@/lib/utils";
-import type { DropdownOption } from "@/components/ui/dropdown-menu";
+import type { Item } from '@/backend/schema';
+import type { DropdownOption } from '@/components/ui/dropdown-menu';
+import type { AllMaterialInfo } from '@/data/types';
+import { sortStringAsNumber } from '@/lib/utils';
 
 // NOTE: exported atoms are initialized with useHydrateAtom
 
-export const materialNameToInfoAtom = atom<AllMaterialInfo["nameToInfo"]>({});
+export const materialNameToInfoAtom = atom<AllMaterialInfo['nameToInfo']>({});
 
 // ASCENSION/LEVEL
-export const levelOptionsAtom = atom<DropdownOption<number>[]>([]);
+export const levelOptionsAtom = atom<Array<DropdownOption<number>>>([]);
 export const levelMatsAtom = atom<Item[][]>([]);
 
 const levelMinAtom = atom(0);
 export const levelMaxAtom = atom(13);
 
 // TALENTS
-export const talentOptionsAtom = atom<DropdownOption<number>[]>([]);
+export const talentOptionsAtom = atom<Array<DropdownOption<number>>>([]);
 export const talentMatsAtom = atom<Item[][]>([]);
 
 const attackMinAtom = atom(0);
@@ -31,68 +31,52 @@ export const burstMaxAtom = atom(9);
 
 // MATERIALS
 const characterMaterialsAtom = atom((get) =>
-  calculateMaterialsRange(
-    get(levelMatsAtom),
-    get(levelMinAtom),
-    get(levelMaxAtom),
-  ),
+  calculateMaterialsRange(get(levelMatsAtom), get(levelMinAtom), get(levelMaxAtom))
 );
 
 const talentMaterialsAtom = atom((get) =>
   mergeMaterials(
-    calculateMaterialsRange(
-      get(talentMatsAtom),
-      get(attackMinAtom),
-      get(attackMaxAtom),
-    ),
-    calculateMaterialsRange(
-      get(talentMatsAtom),
-      get(skillMinAtom),
-      get(skillMaxAtom),
-    ),
-    calculateMaterialsRange(
-      get(talentMatsAtom),
-      get(burstMinAtom),
-      get(burstMaxAtom),
-    ),
-  ),
+    calculateMaterialsRange(get(talentMatsAtom), get(attackMinAtom), get(attackMaxAtom)),
+    calculateMaterialsRange(get(talentMatsAtom), get(skillMinAtom), get(skillMaxAtom)),
+    calculateMaterialsRange(get(talentMatsAtom), get(burstMinAtom), get(burstMaxAtom))
+  )
 );
 
 const calculatedMaterialsAtom = atom((get) => {
   const characterMaterials = get(characterMaterialsAtom);
   const materialNameToInfo = get(materialNameToInfoAtom);
 
-  return Object.entries(
-    mergeMaterials(get(characterMaterialsAtom), get(talentMaterialsAtom)),
-  ).sort(([aName], [bName]) => {
-    // give characterMaterials priority in sort
-    const aIsCharMat = characterMaterials[aName] !== undefined;
-    const bIsCharMat = characterMaterials[bName] !== undefined;
+  return Object.entries(mergeMaterials(get(characterMaterialsAtom), get(talentMaterialsAtom))).sort(
+    ([aName], [bName]) => {
+      // give characterMaterials priority in sort
+      const aIsCharMat = characterMaterials[aName] !== undefined;
+      const bIsCharMat = characterMaterials[bName] !== undefined;
 
-    if (aIsCharMat === bIsCharMat) {
-      const aSortorder = materialNameToInfo[aName]!.sortorder;
-      const bSortorder = materialNameToInfo[bName]!.sortorder;
+      if (aIsCharMat === bIsCharMat) {
+        const aSortorder = materialNameToInfo[aName]!.sortorder;
+        const bSortorder = materialNameToInfo[bName]!.sortorder;
 
-      if (aSortorder === bSortorder) {
-        const aRarity = materialNameToInfo[aName]!.rarity;
-        const bRarity = materialNameToInfo[bName]!.rarity;
+        if (aSortorder === bSortorder) {
+          const aRarity = materialNameToInfo[aName]!.rarity;
+          const bRarity = materialNameToInfo[bName]!.rarity;
 
-        return sortStringAsNumber(aRarity, bRarity);
+          return sortStringAsNumber(aRarity, bRarity);
+        } else {
+          return aSortorder - bSortorder;
+        }
+      } else if (aIsCharMat) {
+        return -1; // sort a before b
       } else {
-        return aSortorder - bSortorder;
+        return 1; // sort b before a
       }
-    } else if (aIsCharMat) {
-      return -1; // sort a before b
-    } else {
-      return 1; // sort b before a
     }
-  });
+  );
 });
 
 function calculateMaterialsRange(
   costs: Item[][],
   start: number, // min is 0
-  end: number, // max is len of array (not max index)
+  end: number // max is len of array (not max index)
 ) {
   const materials: Record<string, number> = {};
 
@@ -113,7 +97,7 @@ function calculateMaterialsRange(
   return materials;
 }
 
-function mergeMaterials(...materials: Record<string, number>[]) {
+function mergeMaterials(...materials: Array<Record<string, number>>) {
   const merged: Record<string, number> = {};
 
   materials.forEach((material) => {

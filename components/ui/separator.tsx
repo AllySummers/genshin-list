@@ -1,10 +1,30 @@
 'use client';
 
-import * as SeparatorPrimitive from '@radix-ui/react-separator';
-import * as React from 'react';
+import SeparatorPrimitive from '@radix-ui/react-separator';
+import React from 'react';
 
 import { IconImage } from '@/components/ui/icon-image';
 import { cn } from '@/lib/utils';
+
+const DecorativeEndpoint = ({
+  src,
+  orientation,
+  invert
+}: {
+  src: string;
+  orientation: 'horizontal' | 'vertical';
+  invert: boolean;
+}) => (
+  <IconImage
+    className={cn(
+      'pointer-events-none h-[0.5625rem] w-[1.1875rem] select-none',
+      orientation === 'vertical' && 'rotate-90'
+    )}
+    src={src}
+    alt=""
+    invert={invert}
+  />
+);
 
 const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
@@ -30,25 +50,5 @@ const Separator = React.forwardRef<
   </SeparatorPrimitive.Root>
 ));
 Separator.displayName = SeparatorPrimitive.Root.displayName;
-
-const DecorativeEndpoint = ({
-  src,
-  orientation,
-  invert
-}: {
-  src: string;
-  orientation: 'horizontal' | 'vertical';
-  invert: boolean;
-}) => (
-  <IconImage
-    className={cn(
-      'pointer-events-none h-[0.5625rem] w-[1.1875rem] select-none',
-      orientation === 'vertical' && 'rotate-90'
-    )}
-    src={src}
-    alt=""
-    invert={invert}
-  />
-);
 
 export { Separator };

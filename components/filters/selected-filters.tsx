@@ -8,6 +8,24 @@ import { getInitialFilterAttributes } from '@/data/constants';
 import type { FilterAttributes } from '@/data/types';
 import { cn } from '@/lib/utils';
 
+const FilterIndicator = ({ filter }: { filter: string }) => (
+  <div className="flex h-full items-center justify-center whitespace-nowrap rounded-full bg-btn-dark-foreground px-3 text-sm text-btn-dark">
+    {filter === '4' || filter === '5' ? `${filter}-Star` : filter}
+  </div>
+);
+
+const BlurEffect = () => (
+  // make sure -left-[x] is equal to w-[x]
+  <div className="absolute -left-3 top-0 h-full w-3 bg-gradient-to-l from-[#C5C1BA]" />
+);
+
+// to prevent last item from hiding in drag area
+const EndPadding = () => (
+  <div className="min-h-px min-w-px select-none bg-transparent px-2" aria-hidden>
+    &nbsp;
+  </div>
+);
+
 interface SelectedFiltersProps {
   attrFilter: FilterAttributes;
   setAttrFilter: (attrFilter: FilterAttributes) => void;
@@ -32,6 +50,7 @@ export const SelectedFilters = ({
   return (
     !isEmpty && (
       <div
+        // eslint-disable-next-line tailwindcss/no-contradicting-classname
         className={cn(
           'relative flex h-9 max-w-3xl overflow-hidden rounded-full',
           transparent ? 'bg-gradient-to-l from-[#C5C1BA] from-30% to-[#C5C1BA]/90' : 'bg-[#C5C1BA]',
@@ -59,21 +78,3 @@ export const SelectedFilters = ({
     )
   );
 };
-
-const FilterIndicator = ({ filter }: { filter: string }) => (
-  <div className="flex h-full items-center justify-center whitespace-nowrap rounded-full bg-btn-dark-foreground px-3 text-sm text-btn-dark">
-    {filter === '4' || filter === '5' ? `${filter}-Star` : filter}
-  </div>
-);
-
-const BlurEffect = () => (
-  // make sure -left-[x] is equal to w-[x]
-  <div className="absolute -left-3 top-0 h-full w-3 bg-gradient-to-l from-[#C5C1BA]" />
-);
-
-// to prevent last item from hiding in drag area
-const EndPadding = () => (
-  <div className="min-h-px min-w-px select-none bg-transparent px-2" aria-hidden>
-    &nbsp;
-  </div>
-);

@@ -5,7 +5,7 @@ import {
   CollapsibleTrigger as CollapsiblePrimitive_CollapsibleTrigger,
   CollapsibleContent as CollapsiblePrimitive_CollapsibleContent
 } from '@radix-ui/react-collapsible';
-import * as React from 'react';
+import React from 'react';
 
 const Collapsible = Root;
 

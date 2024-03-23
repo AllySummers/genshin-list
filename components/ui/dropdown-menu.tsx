@@ -1,8 +1,9 @@
 'use client';
 
 import { Listbox, Transition } from '@headlessui/react';
+import type { ClassValue } from 'clsx';
 import { Check } from 'lucide-react';
-import * as React from 'react';
+import React from 'react';
 
 import { Icons } from '@/components/icons';
 import { Button, buttonSizeClassNames } from '@/components/ui/button';
@@ -18,6 +19,7 @@ const DropdownMenu = React.forwardRef<
   React.ElementRef<typeof Listbox>,
   React.ComponentPropsWithoutRef<typeof Listbox> & {
     children: React.ReactNode;
+    className?: ClassValue;
   }
 >(({ className, children, ...props }, ref) => (
   <Listbox ref={ref} {...props}>

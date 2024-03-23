@@ -1,7 +1,7 @@
 'use client';
 
 import { SearchIcon, X } from 'lucide-react';
-import * as React from 'react';
+import React from 'react';
 
 import { Input } from '@/components/ui/input';
 import { useSearchQuery } from '@/hooks/use-characters';
