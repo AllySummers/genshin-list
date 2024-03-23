@@ -1,10 +1,11 @@
+import type { ReactNode } from 'react';
 import { IconImage } from '@/components/ui/icon-image';
 import type { Active, Constellation, Passive } from '@/data/types';
 import { formatImageUrl } from '@/lib/utils';
 
 interface SectionRowProps {
   talent: Active | Constellation | Passive;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export const SectionRow = ({ talent, children }: SectionRowProps) => (

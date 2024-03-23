@@ -1,12 +1,13 @@
 import { Provider as JotaiProvider } from 'jotai';
 
+import type { ComponentProps } from 'react';
 import { getCharacterMaterialInfo } from '@/backend/requests';
 import { HydrateMaterialAtoms } from '@/components/hydrate-materials';
 import { formatAscension } from '@/components/icons';
 import type { MaterialCount } from '@/data/types';
 import { sortStringAsNumber } from '@/lib/utils';
 
-interface MaterialProviderProps extends React.ComponentProps<typeof JotaiProvider> {
+interface MaterialProviderProps extends ComponentProps<typeof JotaiProvider> {
   name: string;
 }
 

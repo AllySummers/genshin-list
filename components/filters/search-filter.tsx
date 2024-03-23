@@ -1,7 +1,7 @@
 'use client';
 
 import { SearchIcon, X } from 'lucide-react';
-import React from 'react';
+import React, { type ChangeEvent } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { useSearchQuery } from '@/hooks/use-characters';
@@ -15,7 +15,7 @@ export const Search = ({}: SearchProps) => {
   const hasValue = searchQuery !== '';
 
   // Input Field handler
-  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 

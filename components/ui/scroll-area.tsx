@@ -1,13 +1,13 @@
 'use client';
 
 import ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-import React from 'react';
+import React, { forwardRef, type ComponentPropsWithoutRef, type ElementRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
-const ScrollBar = React.forwardRef<
-  React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
+const ScrollBar = forwardRef<
+  ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
+  ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
     thumbClassName?: string;
   }
 >(({ className, thumbClassName, orientation = 'vertical', ...props }, ref) => (
@@ -29,9 +29,9 @@ const ScrollBar = React.forwardRef<
 ));
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
 
-const ScrollArea = React.forwardRef<
-  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
+const ScrollArea = forwardRef<
+  ElementRef<typeof ScrollAreaPrimitive.Root>,
+  ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
     scrollbarClassName?: string;
     thumbClassName?: string;
   }

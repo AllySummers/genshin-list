@@ -1,6 +1,7 @@
+import type { HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
-type IconProps = React.HTMLAttributes<SVGElement>;
+type IconProps = HTMLAttributes<SVGElement>;
 
 type IconComponent = (props: IconProps) => JSX.Element;
 

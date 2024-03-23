@@ -5,7 +5,7 @@ import {
   CollapsibleTrigger as CollapsiblePrimitive_CollapsibleTrigger,
   CollapsibleContent as CollapsiblePrimitive_CollapsibleContent
 } from '@radix-ui/react-collapsible';
-import React from 'react';
+import React, { forwardRef, useState, type ComponentPropsWithoutRef, type ElementRef } from 'react';
 
 const Collapsible = Root;
 
@@ -13,11 +13,11 @@ const CollapsibleTrigger = CollapsiblePrimitive_CollapsibleTrigger;
 
 const CollapsibleContent = CollapsiblePrimitive_CollapsibleContent;
 
-const CollapsibleWithState = React.forwardRef<
-  React.ElementRef<typeof Collapsible>,
-  Omit<React.ComponentPropsWithoutRef<typeof Collapsible>, 'onOpenChange' | 'open'>
+const CollapsibleWithState = forwardRef<
+  ElementRef<typeof Collapsible>,
+  Omit<ComponentPropsWithoutRef<typeof Collapsible>, 'onOpenChange' | 'open'>
 >(({ className, ...props }, ref) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return <Collapsible open={open} onOpenChange={setOpen} className={className} ref={ref} {...props} />;
 });

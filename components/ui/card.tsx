@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import Image, { type ImageProps } from 'next/image';
-import React from 'react';
+import React, { type HTMLAttributes } from 'react';
 
 import { cn } from '@/lib/utils';
 import CardBG from '@/public/images/card-bg.png';
@@ -17,7 +17,7 @@ const cardVariants = cva(
   }
 );
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
+interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
   asChild?: boolean;
 }
 
@@ -60,7 +60,7 @@ const CardImage = ({ className, imageClassName, alt, gradient, children, ...prop
 );
 CardImage.displayName = 'CardImage';
 
-const CardLabel = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const CardLabel = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className="relative w-full px-2 py-0.5" {...props}>
     <span className={cn('relative block w-full truncate text-center capitalize text-card-foreground', className)}>
       {children}

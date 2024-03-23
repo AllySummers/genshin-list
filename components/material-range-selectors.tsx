@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
 
-import { Icons } from '@/components/icons';
+import { RightArrowIcon } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -28,7 +28,7 @@ import {
 
 interface CalculatorDropdownProps {
   curValue: number;
-  setValue: React.Dispatch<React.SetStateAction<number>>;
+  setValue: Dispatch<SetStateAction<number>>;
   options: Array<DropdownOption<number>>;
   className?: string;
 }
@@ -54,8 +54,8 @@ interface RangeSelectorProps {
   title: string;
   min: number;
   max: number;
-  setMin: React.Dispatch<React.SetStateAction<number>>;
-  setMax: React.Dispatch<React.SetStateAction<number>>;
+  setMin: Dispatch<SetStateAction<number>>;
+  setMax: Dispatch<SetStateAction<number>>;
   options: Array<DropdownOption<number>>;
 }
 
@@ -65,7 +65,7 @@ const RangeSelector = ({ title, min, max, setMin, setMax, options }: RangeSelect
     <div className="grid grid-cols-[1fr_24px_1fr] items-center justify-center gap-2">
       <CalculatorDropdown curValue={min} setValue={setMin} options={options} />
       <div className="flex w-full items-center justify-center text-gray-600">
-        <Icons.rightarrow className="size-6 min-w-6" />
+        <RightArrowIcon className="size-6 min-w-6" />
       </div>
       <CalculatorDropdown curValue={max} setValue={setMax} options={options} />
     </div>

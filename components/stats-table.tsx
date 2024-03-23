@@ -1,10 +1,25 @@
+import type { ReactNode } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 import type { Active } from '@/data/types';
 import { cn } from '@/lib/utils';
 
+const headColorClassName = 'bg-muted dark:bg-background';
+
+interface FirstColumnHeadProps {
+  className?: string;
+  paddingClassName?: string;
+  children: ReactNode;
+}
+
+const FirstColumnHead = ({ className, paddingClassName, children }: FirstColumnHeadProps) => (
+  <TableHead scope="row" className={cn('sticky left-0 w-36 p-0 sm:w-40', headColorClassName, className)}>
+    <div className={cn('w-36 sm:w-40', paddingClassName)}>{children}</div>
+  </TableHead>
+);
+
 interface StatsTableProps {
   data: Active['attributes'];
-  topHeadings: React.ReactNode[];
+  topHeadings: ReactNode[];
 }
 
 export const StatsTable = ({ data, topHeadings }: StatsTableProps) => (
@@ -32,18 +47,4 @@ export const StatsTable = ({ data, topHeadings }: StatsTableProps) => (
       ))}
     </TableBody>
   </Table>
-);
-
-const headColorClassName = 'bg-muted dark:bg-background';
-
-interface FirstColumnHeadProps {
-  className?: string;
-  paddingClassName?: string;
-  children: React.ReactNode;
-}
-
-const FirstColumnHead = ({ className, paddingClassName, children }: FirstColumnHeadProps) => (
-  <TableHead scope="row" className={cn('sticky left-0 w-36 p-0 sm:w-40', headColorClassName, className)}>
-    <div className={cn('w-36 sm:w-40', paddingClassName)}>{children}</div>
-  </TableHead>
 );

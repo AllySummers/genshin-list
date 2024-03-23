@@ -2,6 +2,7 @@
 
 import { useHydrateAtoms } from 'jotai/utils';
 
+import type { ReactNode } from 'react';
 import type { Item } from '@/backend/schema';
 import type { DropdownOption } from '@/components/ui/dropdown-menu';
 import type { AllMaterialInfo } from '@/data/types';
@@ -23,7 +24,7 @@ interface HydrateAtomsProps {
   levelMats: Item[][];
   talentOptions: Array<DropdownOption<number>>;
   talentMats: Item[][];
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function HydrateMaterialAtoms({

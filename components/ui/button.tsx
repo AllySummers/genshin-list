@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import Link from 'next/link';
-import React from 'react';
+import React, { forwardRef, type ButtonHTMLAttributes, type ComponentPropsWithoutRef, type ElementRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -36,13 +36,11 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
@@ -50,41 +48,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = 'Button';
 
-const CircleButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, children, ...props }, ref) => (
-    <button
+const CircleButton = forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, children, ...props }, ref) => (
+  <button
+    className={cn('group relative flex cursor-pointer items-center justify-center rounded-full', 'size-14', className)}
+    ref={ref}
+    {...props}
+  >
+    <Button
+      variant={variant}
       className={cn(
-        'group relative flex cursor-pointer items-center justify-center rounded-full',
-        'size-14',
-        className
+        'peer z-[1] p-0 transition-all duration-300 group-hover:shadow-inner group-hover:ring-3 group-hover:transition-none',
+        'size-11 group-hover:size-[3.25rem]'
       )}
-      ref={ref}
-      {...props}
+      asChild
     >
-      <Button
-        variant={variant}
-        className={cn(
-          'peer z-[1] p-0 transition-all duration-300 group-hover:shadow-inner group-hover:ring-3 group-hover:transition-none',
-          'size-11 group-hover:size-[3.25rem]'
-        )}
-        asChild
-      >
-        <div>{children}</div>
-      </Button>
-      <div
-        className={cn(
-          'absolute left-1/2 top-1/2 z-0 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-outline transition-all duration-300',
-          'size-14 group-hover:size-12',
-          variant === 'brown' && 'bg-btn-brown-outline',
-          variant === 'blue' && 'bg-btn-blue-outline'
-        )}
-      />
-    </button>
-  )
-);
+      <div>{children}</div>
+    </Button>
+    <div
+      className={cn(
+        'absolute left-1/2 top-1/2 z-0 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-outline transition-all duration-300',
+        'size-14 group-hover:size-12',
+        variant === 'brown' && 'bg-btn-brown-outline',
+        variant === 'blue' && 'bg-btn-blue-outline'
+      )}
+    />
+  </button>
+));
 CircleButton.displayName = 'CircleButton';
 
-const LinkButton = React.forwardRef<React.ElementRef<typeof Link>, React.ComponentPropsWithoutRef<typeof Link>>(
+const LinkButton = forwardRef<ElementRef<typeof Link>, ComponentPropsWithoutRef<typeof Link>>(
   ({ className, href, ...props }, ref) => (
     <Link ref={ref} href={href} className={cn(buttonVariants({ variant: 'default' }), className)} {...props} />
   )

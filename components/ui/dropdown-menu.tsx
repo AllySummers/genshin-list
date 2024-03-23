@@ -3,22 +3,22 @@
 import { Listbox, Transition } from '@headlessui/react';
 import type { ClassValue } from 'clsx';
 import { Check } from 'lucide-react';
-import React from 'react';
+import React, { Fragment, forwardRef, type ComponentPropsWithoutRef, type ElementRef, type ReactNode } from 'react';
 
-import { Icons } from '@/components/icons';
+import { DropdownIcon } from '@/components/icons';
 import { Button, buttonSizeClassNames } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 
 export interface DropdownOption<T> {
-  readonly label: React.ReactNode;
+  readonly label: ReactNode;
   readonly value: T;
 }
 
-const DropdownMenu = React.forwardRef<
-  React.ElementRef<typeof Listbox>,
-  React.ComponentPropsWithoutRef<typeof Listbox> & {
-    children: React.ReactNode;
+const DropdownMenu = forwardRef<
+  ElementRef<typeof Listbox>,
+  ComponentPropsWithoutRef<typeof Listbox> & {
+    children: ReactNode;
     className?: ClassValue;
   }
 >(({ className, children, ...props }, ref) => (
@@ -28,9 +28,9 @@ const DropdownMenu = React.forwardRef<
 ));
 DropdownMenu.displayName = 'DropdownMenu';
 
-const DropdownMenuTrigger = React.forwardRef<
-  React.ElementRef<typeof Button>,
-  React.ComponentPropsWithoutRef<typeof Button> & {
+const DropdownMenuTrigger = forwardRef<
+  ElementRef<typeof Button>,
+  ComponentPropsWithoutRef<typeof Button> & {
     truncate?: boolean;
   }
 >(({ className, truncate = false, children, ...props }, ref) => (
@@ -48,14 +48,14 @@ const DropdownMenuTrigger = React.forwardRef<
     >
       {children}
     </span>
-    <Icons.dropdown className="size-7" />
+    <DropdownIcon className="size-7" />
   </Listbox.Button>
 ));
 DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 
-const DropdownMenuContent = React.forwardRef<
-  React.ElementRef<typeof Listbox.Options>,
-  React.ComponentPropsWithoutRef<typeof Listbox.Options> & {
+const DropdownMenuContent = forwardRef<
+  ElementRef<typeof Listbox.Options>,
+  ComponentPropsWithoutRef<typeof Listbox.Options> & {
     scrollable?: boolean;
   }
 >(({ className, scrollable = false, ...props }, ref) => {
@@ -63,7 +63,7 @@ const DropdownMenuContent = React.forwardRef<
 
   return (
     <Transition
-      as={React.Fragment}
+      as={Fragment}
       enter="transition duration-100 ease-out"
       enterFrom="transform scale-95 opacity-0"
       enterTo="transform scale-100 opacity-100"
@@ -86,12 +86,12 @@ const DropdownMenuContent = React.forwardRef<
 });
 DropdownMenuContent.displayName = 'DropdownMenuContent';
 
-const DropdownMenuItem = React.forwardRef<
-  React.ElementRef<typeof Listbox.Option>,
-  Omit<React.ComponentPropsWithoutRef<typeof Listbox.Option>, 'children'> & {
+const DropdownMenuItem = forwardRef<
+  ElementRef<typeof Listbox.Option>,
+  Omit<ComponentPropsWithoutRef<typeof Listbox.Option>, 'children'> & {
     innerClassName?: string;
     checkClassName?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
     size?: keyof typeof buttonSizeClassNames;
   }
 >(({ value, className, innerClassName, checkClassName, children, size = 'default', ...props }, ref) => (

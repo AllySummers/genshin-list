@@ -1,7 +1,7 @@
 'use client';
 
 import SeparatorPrimitive from '@radix-ui/react-separator';
-import React from 'react';
+import React, { forwardRef, type ComponentPropsWithoutRef, type ElementRef } from 'react';
 
 import { IconImage } from '@/components/ui/icon-image';
 import { cn } from '@/lib/utils';
@@ -26,9 +26,9 @@ const DecorativeEndpoint = ({
   />
 );
 
-const Separator = React.forwardRef<
-  React.ElementRef<typeof SeparatorPrimitive.Root>,
-  Omit<React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>, 'children'> & {
+const Separator = forwardRef<
+  ElementRef<typeof SeparatorPrimitive.Root>,
+  Omit<ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>, 'children'> & {
     invert?: boolean;
     lineClassName?: string;
   }

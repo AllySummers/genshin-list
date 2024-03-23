@@ -1,4 +1,4 @@
-import { Icons } from '@/components/icons';
+import { DropdownIcon } from '@/components/icons';
 import { SectionRow } from '@/components/sections/section-row';
 import { StatsTable } from '@/components/stats-table';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ const ActiveTalentAttributes = ({ talent }: ActiveTalentAttributesProps) => {
       <CollapsibleTrigger asChild>
         <Button variant="secondary">
           {talent.category} Stats
-          <Icons.dropdown className="ml-1.5 size-6 min-w-6 transition-transform group-data-[state=open]:rotate-180" />
+          <DropdownIcon className="ml-1.5 size-6 min-w-6 transition-transform group-data-[state=open]:rotate-180" />
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="mt-4">

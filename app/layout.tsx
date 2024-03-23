@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 
+import type { ReactNode } from 'react';
 import { CharacterProvider } from '@/components/character-provider';
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
@@ -47,7 +48,7 @@ export const viewport: Viewport = {
 };
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const RootLayout = ({ children }: RootLayoutProps) => (

@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FilterButton } from '@/components/filters/filter-button';
 import { SelectedFilters } from '@/components/filters/selected-filters';
-import { Icons } from '@/components/icons';
+import { FilterIcon } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
@@ -57,7 +57,7 @@ interface FilterSheetProps {
 
 export const FilterSheet = ({ className }: FilterSheetProps) => {
   const [attrFilter, setAttrFilter] = useAttrFilter();
-  const [curFilter, setCurFilter] = React.useState(attrFilter);
+  const [curFilter, setCurFilter] = useState(attrFilter);
 
   const hasChanged = !isEqualFilters(attrFilter, curFilter);
 
@@ -65,7 +65,7 @@ export const FilterSheet = ({ className }: FilterSheetProps) => {
     <Sheet onOpenChange={() => setCurFilter(attrFilter)}>
       <SheetTrigger asChild>
         <Button size="icon" className={className}>
-          <Icons.filter className="size-6" />
+          <FilterIcon className="size-6" />
           <span className="sr-only">Filter</span>
         </Button>
       </SheetTrigger>
