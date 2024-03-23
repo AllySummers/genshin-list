@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
-import { LinkButton } from "@/components/ui/button";
+import { LinkButton } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: "Page Not Found",
+  title: 'Page Not Found'
 };
 
 export default function NotFound() {

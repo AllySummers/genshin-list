@@ -1,5 +1,5 @@
-import { CharacterList } from "@/components/character-list";
-import { FilterHub } from "@/components/filters/filter-hub";
+import { CharacterList } from '@/components/character-list';
+import { FilterHub } from '@/components/filters/filter-hub';
 
 export default function Home() {
   return (

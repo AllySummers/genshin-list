@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import { useHydrateAtoms } from "jotai/utils";
+import { useHydrateAtoms } from 'jotai/utils';
 
-import type { Item } from "@/backend/schema";
-import type { AllMaterialInfo } from "@/data/types";
+import type { Item } from '@/backend/schema';
+import type { DropdownOption } from '@/components/ui/dropdown-menu';
+import type { AllMaterialInfo } from '@/data/types';
 import {
   attackMaxAtom,
   burstMaxAtom,
@@ -13,15 +14,14 @@ import {
   materialNameToInfoAtom,
   skillMaxAtom,
   talentMatsAtom,
-  talentOptionsAtom,
-} from "@/hooks/use-materials";
-import type { DropdownOption } from "@/components/ui/dropdown-menu";
+  talentOptionsAtom
+} from '@/hooks/use-materials';
 
 interface HydrateAtomsProps {
   materials: AllMaterialInfo;
-  levelOptions: DropdownOption<number>[];
+  levelOptions: Array<DropdownOption<number>>;
   levelMats: Item[][];
-  talentOptions: DropdownOption<number>[];
+  talentOptions: Array<DropdownOption<number>>;
   talentMats: Item[][];
   children: React.ReactNode;
 }
@@ -32,7 +32,7 @@ export function HydrateMaterialAtoms({
   levelMats,
   talentOptions,
   talentMats,
-  children,
+  children
 }: HydrateAtomsProps) {
   useHydrateAtoms([
     [materialNameToInfoAtom, materials.nameToInfo],
@@ -43,7 +43,7 @@ export function HydrateMaterialAtoms({
     [talentMatsAtom, talentMats],
     [attackMaxAtom, talentOptions.length - 1],
     [skillMaxAtom, talentOptions.length - 1],
-    [burstMaxAtom, talentOptions.length - 1],
+    [burstMaxAtom, talentOptions.length - 1]
   ]);
   return children;
 }

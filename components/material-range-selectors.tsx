@@ -1,7 +1,16 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
+import { Icons } from '@/components/icons';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  type DropdownOption
+} from '@/components/ui/dropdown-menu';
 import {
   useAttackMax,
   useAttackMin,
@@ -14,19 +23,10 @@ import {
   useSetNoLevels,
   useSkillMax,
   useSkillMin,
-  useTalentOptions,
-} from "@/hooks/use-materials";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  type DropdownOption,
-} from "@/components/ui/dropdown-menu";
-import { Icons } from "@/components/icons";
+  useTalentOptions
+} from '@/hooks/use-materials';
 
-export function LevelRangeSelector() {
+export const LevelRangeSelector = () => {
   const levelOptions = useLevelOptions();
   const [levelMin, setLevelMin] = useLevelMin();
   const [levelMax, setLevelMax] = useLevelMax();
@@ -41,9 +41,9 @@ export function LevelRangeSelector() {
       options={levelOptions}
     />
   );
-}
+};
 
-export function AttackRangeSelector() {
+export const AttackRangeSelector = () => {
   const talentOptions = useTalentOptions();
   const [attackMin, setAttackMin] = useAttackMin();
   const [attackMax, setAttackMax] = useAttackMax();
@@ -58,9 +58,9 @@ export function AttackRangeSelector() {
       options={talentOptions}
     />
   );
-}
+};
 
-export function SkillRangeSelector() {
+export const SkillRangeSelector = () => {
   const talentOptions = useTalentOptions();
   const [skillMin, setSkillMin] = useSkillMin();
   const [skillMax, setSkillMax] = useSkillMax();
@@ -75,9 +75,9 @@ export function SkillRangeSelector() {
       options={talentOptions}
     />
   );
-}
+};
 
-export function BurstRangeSelector() {
+export const BurstRangeSelector = () => {
   const talentOptions = useTalentOptions();
   const [burstMin, setBurstMin] = useBurstMin();
   const [burstMax, setBurstMax] = useBurstMax();
@@ -92,9 +92,9 @@ export function BurstRangeSelector() {
       options={talentOptions}
     />
   );
-}
+};
 
-export function RangeTemplateSelector() {
+export const RangeTemplateSelector = () => {
   const setNoLevels = useSetNoLevels();
   const setMaxLevels = useSetMaxLevels();
 
@@ -108,7 +108,7 @@ export function RangeTemplateSelector() {
       </Button>
     </div>
   );
-}
+};
 
 interface RangeSelectorProps {
   title: string;
@@ -116,74 +116,42 @@ interface RangeSelectorProps {
   max: number;
   setMin: React.Dispatch<React.SetStateAction<number>>;
   setMax: React.Dispatch<React.SetStateAction<number>>;
-  options: DropdownOption<number>[];
+  options: Array<DropdownOption<number>>;
 }
 
-function RangeSelector({
-  title,
-  min,
-  max,
-  setMin,
-  setMax,
-  options,
-}: RangeSelectorProps) {
-  return (
-    <div className="w-full">
-      <h3 className="mb-1">{title}</h3>
-      <div className="grid grid-cols-[1fr_24px_1fr] items-center justify-center gap-2">
-        <CalculatorDropdown
-          curValue={min}
-          setValue={setMin}
-          options={options}
-        />
-        <div className="flex w-full items-center justify-center text-gray-600">
-          <Icons.rightarrow className="h-6 w-6 min-w-[1.5rem]" />
-        </div>
-        <CalculatorDropdown
-          curValue={max}
-          setValue={setMax}
-          options={options}
-        />
+const RangeSelector = ({ title, min, max, setMin, setMax, options }: RangeSelectorProps) => (
+  <div className="w-full">
+    <h3 className="mb-1">{title}</h3>
+    <div className="grid grid-cols-[1fr_24px_1fr] items-center justify-center gap-2">
+      <CalculatorDropdown curValue={min} setValue={setMin} options={options} />
+      <div className="flex w-full items-center justify-center text-gray-600">
+        <Icons.rightarrow className="size-6 min-w-6" />
       </div>
+      <CalculatorDropdown curValue={max} setValue={setMax} options={options} />
     </div>
-  );
-}
+  </div>
+);
 
 interface CalculatorDropdownProps {
   curValue: number;
   setValue: React.Dispatch<React.SetStateAction<number>>;
-  options: DropdownOption<number>[];
+  options: Array<DropdownOption<number>>;
   className?: string;
 }
 
-function CalculatorDropdown({
-  curValue,
-  setValue,
-  options,
-  className,
-}: CalculatorDropdownProps) {
+const CalculatorDropdown = ({ curValue, setValue, options, className }: CalculatorDropdownProps) => {
   const selectedOption = options[curValue]!;
 
   return (
-    <DropdownMenu
-      value={selectedOption.value}
-      onChange={setValue}
-      className={className}
-    >
-      <DropdownMenuTrigger size="small">
-        {selectedOption.label}
-      </DropdownMenuTrigger>
+    <DropdownMenu value={selectedOption.value} onChange={setValue} className={className}>
+      <DropdownMenuTrigger size="small">{selectedOption.label}</DropdownMenuTrigger>
       <DropdownMenuContent scrollable>
         {options.map((option) => (
-          <DropdownMenuItem
-            key={option.value}
-            value={option.value}
-            size="small"
-          >
+          <DropdownMenuItem key={option.value} value={option.value} size="small">
             <span className="flex items-center">{option.label}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};

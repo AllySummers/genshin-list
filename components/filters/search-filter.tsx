@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { SearchIcon, X } from "lucide-react";
+import { SearchIcon, X } from 'lucide-react';
+import * as React from 'react';
 
-import { cn } from "@/lib/utils";
-import { useSearchQuery } from "@/hooks/use-characters";
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
+import { useSearchQuery } from '@/hooks/use-characters';
+import { cn } from '@/lib/utils';
 
 interface SearchProps {}
 
-export function Search({}: SearchProps) {
+export const Search = ({}: SearchProps) => {
   const [searchQuery, setSearchQuery] = useSearchQuery();
 
-  const hasValue = searchQuery !== "";
+  const hasValue = searchQuery !== '';
 
   // Input Field handler
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ export function Search({}: SearchProps) {
 
   // Reset Input Field handler
   const resetInputField = () => {
-    setSearchQuery("");
+    setSearchQuery('');
   };
 
   return (
@@ -29,10 +29,7 @@ export function Search({}: SearchProps) {
       <div className="flex h-11 items-center rounded-full text-foreground ring-2 ring-inset ring-border transition focus-within:ring-primary-ring">
         <SearchIcon className="ml-3 size-5" />
         <Input
-          className={cn(
-            "h-8 flex-1 rounded-r-full bg-transparent px-2 py-0 text-lg",
-            hasValue && "pr-0",
-          )}
+          className={cn('h-8 flex-1 rounded-r-full bg-transparent px-2 py-0 text-lg', hasValue && 'pr-0')}
           type="text"
           aria-label="Search"
           placeholder="Search for Characters..."
@@ -48,4 +45,4 @@ export function Search({}: SearchProps) {
       </div>
     </div>
   );
-}
+};

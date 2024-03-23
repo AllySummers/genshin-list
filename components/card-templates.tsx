@@ -1,47 +1,40 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import type { CharacterFilter } from "@/data/types";
-import {
-  formatImageUrl,
-  formatLocalImageUrl,
-  formatLongNumber,
-  formatNameUrl,
-} from "@/lib/utils";
-import { Card, CardImage, CardLabel } from "@/components/ui/card";
-import { IconImage } from "@/components/ui/icon-image";
+import { Card, CardImage, CardLabel } from '@/components/ui/card';
+import { IconImage } from '@/components/ui/icon-image';
+import type { CharacterFilter } from '@/data/types';
+import { formatImageUrl, formatLocalImageUrl, formatLongNumber, formatNameUrl } from '@/lib/utils';
 
 interface CharacterCardProps {
   character: CharacterFilter;
   size: number;
 }
 
-export function CharacterCard({ character, size }: CharacterCardProps) {
-  return (
-    <Card hover="default" asChild>
-      <Link href={formatNameUrl(character.name)}>
-        <CardImage
-          src={formatImageUrl(character.icon)}
-          alt=""
-          gradient={character.rarity === "5" ? "gold" : "purple"}
-          width={size}
-          height={size}
-        >
-          <div className="absolute left-0.5 top-0.5">
-            <IconImage
-              src={formatLocalImageUrl("/elements", character.element)}
-              alt={character.element}
-              className="h-[1.875rem] w-[1.875rem]"
-            />
-          </div>
-        </CardImage>
-        <CardLabel title={character.name}>{character.name}</CardLabel>
-      </Link>
-    </Card>
-  );
-}
+export const CharacterCard = ({ character, size }: CharacterCardProps) => (
+  <Card hover="default" asChild>
+    <Link href={formatNameUrl(character.name)}>
+      <CardImage
+        src={formatImageUrl(character.icon)}
+        alt=""
+        gradient={character.rarity === '5' ? 'gold' : 'purple'}
+        width={size}
+        height={size}
+      >
+        <div className="absolute left-0.5 top-0.5">
+          <IconImage
+            src={formatLocalImageUrl('/elements', character.element)}
+            alt={character.element}
+            className="size-[1.875rem]"
+          />
+        </div>
+      </CardImage>
+      <CardLabel title={character.name}>{character.name}</CardLabel>
+    </Link>
+  </Card>
+);
 
 interface ItemCardProps {
-  label: string | number;
+  label: number | string;
   src: string;
   alt: string;
   size: number;
@@ -49,18 +42,8 @@ interface ItemCardProps {
   shortenLongNumber?: boolean; // format long numbers => 7,050,900 => 7.05M
 }
 
-export function ItemCard({
-  label,
-  src,
-  alt,
-  size,
-  unoptimized = true,
-  shortenLongNumber = true,
-}: ItemCardProps) {
-  const formattedLabel =
-    shortenLongNumber && typeof label === "number"
-      ? formatLongNumber(label)
-      : label;
+export const ItemCard = ({ label, src, alt, size, unoptimized = true, shortenLongNumber = true }: ItemCardProps) => {
+  const formattedLabel = shortenLongNumber && typeof label === 'number' ? formatLongNumber(label) : label;
 
   return (
     <Card>
@@ -75,4 +58,4 @@ export function ItemCard({
       <CardLabel>{formattedLabel}</CardLabel>
     </Card>
   );
-}
+};

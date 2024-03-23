@@ -1,6 +1,6 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface IconImageProps {
   src: string;
@@ -10,24 +10,16 @@ interface IconImageProps {
   invert?: boolean;
 }
 
-const IconImage = ({
-  src,
-  alt,
-  className,
-  imageClassName,
-  invert = false,
-}: IconImageProps) => {
-  return (
-    <div className={cn("relative block", className)}>
-      <Image
-        alt={alt}
-        src={src}
-        fill
-        unoptimized // https://vercel.com/docs/image-optimization/limits-and-pricing
-        className={cn(invert && "invert dark:filter-none", imageClassName)}
-      />
-    </div>
-  );
-};
+const IconImage = ({ src, alt, className, imageClassName, invert = false }: IconImageProps) => (
+  <div className={cn('relative block', className)}>
+    <Image
+      alt={alt}
+      src={src}
+      fill
+      unoptimized // https://vercel.com/docs/image-optimization/limits-and-pricing
+      className={cn(invert && 'invert dark:filter-none', imageClassName)}
+    />
+  </div>
+);
 
 export { IconImage };

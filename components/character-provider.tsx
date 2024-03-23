@@ -1,22 +1,16 @@
-import { Provider as JotaiProvider } from "jotai";
+import { Provider as JotaiProvider } from 'jotai';
 
-import { getAllCharacters } from "@/data/retrieve";
-import { HydrateCharacterAtoms } from "@/components/hydrate-characters";
+import { HydrateCharacterAtoms } from '@/components/hydrate-characters';
+import { getAllCharacters } from '@/data/retrieve';
 
-interface CharacterProviderProps
-  extends React.ComponentProps<typeof JotaiProvider> {}
+interface CharacterProviderProps extends React.ComponentProps<typeof JotaiProvider> {}
 
-export function CharacterProvider({
-  children,
-  ...props
-}: CharacterProviderProps) {
+export const CharacterProvider = ({ children, ...props }: CharacterProviderProps) => {
   const characters = getAllCharacters();
 
   return (
     <JotaiProvider {...props}>
-      <HydrateCharacterAtoms characters={characters}>
-        {children}
-      </HydrateCharacterAtoms>
+      <HydrateCharacterAtoms characters={characters}>{children}</HydrateCharacterAtoms>
     </JotaiProvider>
   );
-}
+};

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -27,12 +27,7 @@ export const Icons = {
     </svg>
   ),
   filter: ({ className, ...props }: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-      className={cn("-scale-x-100", className)}
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className={cn('-scale-x-100', className)} {...props}>
       <path
         d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
         stroke="currentColor"
@@ -41,18 +36,8 @@ export const Icons = {
     </svg>
   ),
   reverse: ({ className, ...props }: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      className={cn("-scale-x-100", className)}
-      {...props}
-    >
-      <path
-        d="M8 16H4l6 6V2H8zm6-11v17h2V8h4l-6-6z"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        fill="currentColor"
-      />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={cn('-scale-x-100', className)} {...props}>
+      <path d="M8 16H4l6 6V2H8zm6-11v17h2V8h4l-6-6z" strokeWidth={1.5} stroke="currentColor" fill="currentColor" />
     </svg>
   ),
   rightarrow: (props: IconProps) => (
@@ -61,25 +46,20 @@ export const Icons = {
     </svg>
   ),
   ascensionstar: (props: IconProps) => (
-    <svg
-      fill="none"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M11.0621 4.53451C11.3843 3.66389 12.6157 3.66389 12.9379 4.53451L14.5413 8.86785C14.6426 9.14157 14.8584 9.35738 15.1321 9.45867L19.4655 11.0621C20.3361 11.3843 20.3361 12.6157 19.4655 12.9379L15.1321 14.5413C14.8584 14.6426 14.6426 14.8584 14.5413 15.1321L12.9379 19.4655C12.6157 20.3361 11.3843 20.3361 11.0621 19.4655L9.45867 15.1321C9.35738 14.8584 9.14157 14.6426 8.86785 14.5413L4.53451 12.9379C3.66389 12.6157 3.66389 11.3843 4.53451 11.0621L8.86785 9.45867C9.14157 9.35738 9.35738 9.14157 9.45867 8.86785L11.0621 4.53451Z"
         fill="currentColor"
       />
     </svg>
-  ),
+  )
 } as const satisfies Record<string, (props: IconProps) => JSX.Element>;
 
 export function formatAscension(label: string, className?: string) {
   return (
     <>
       {label}
-      <Icons.ascensionstar className={cn("ml-1 h-5 w-5", className)} />
+      <Icons.ascensionstar className={cn('ml-1 size-5', className)} />
     </>
   );
 }

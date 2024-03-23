@@ -1,19 +1,13 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
-import {
-  CHARACTER_RARITIES,
-  ELEMENTS,
-  REGIONS,
-  WEAPONS,
-} from "@/data/constants";
-import type { FilterAttribute, FilterAttributes } from "@/data/types";
-import { isEqualSets } from "@/lib/utils";
-import { useAttrFilter } from "@/hooks/use-characters";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import { FilterButton } from '@/components/filters/filter-button';
+import { SelectedFilters } from '@/components/filters/selected-filters';
+import { Icons } from '@/components/icons';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 import {
   Sheet,
   SheetClose,
@@ -21,21 +15,22 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { FilterButton } from "@/components/filters/filter-button";
-import { SelectedFilters } from "@/components/filters/selected-filters";
-import { Icons } from "@/components/icons";
+  SheetTrigger
+} from '@/components/ui/sheet';
+import { CHARACTER_RARITIES, ELEMENTS, REGIONS, WEAPONS } from '@/data/constants';
+import type { FilterAttribute, FilterAttributes } from '@/data/types';
+import { useAttrFilter } from '@/hooks/use-characters';
+import { isEqualSets } from '@/lib/utils';
 
 interface FilterSheetProps {
   className?: string;
 }
 
-export function FilterSheet({ className }: FilterSheetProps) {
+export const FilterSheet = ({ className }: FilterSheetProps) => {
   const [attrFilter, setAttrFilter] = useAttrFilter();
   const [curFilter, setCurFilter] = React.useState(attrFilter);
 
-  const hasChanged = isEqualFilters(attrFilter, curFilter) === false;
+  const hasChanged = !isEqualFilters(attrFilter, curFilter);
 
   return (
     <Sheet onOpenChange={() => setCurFilter(attrFilter)}>
@@ -53,13 +48,8 @@ export function FilterSheet({ className }: FilterSheetProps) {
       >
         <div className="flex h-full flex-col border-x-2 border-sheet-border">
           <SheetHeader className="px-4 pt-6 md:px-7 md:pt-8">
-            <SheetTitle className="text-left text-2xl text-[#D3BC8E]">
-              Filter
-            </SheetTitle>
-            <Separator
-              className="my-4 md:mt-6"
-              lineClassName="bg-sheet-border"
-            />
+            <SheetTitle className="text-left text-2xl text-[#D3BC8E]">Filter</SheetTitle>
+            <Separator className="my-4 md:mt-6" lineClassName="bg-sheet-border" />
           </SheetHeader>
 
           <ScrollArea thumbClassName="bg-genshin-brown/80 border-genshin-brown/80">
@@ -116,7 +106,7 @@ export function FilterSheet({ className }: FilterSheetProps) {
       </SheetContent>
     </Sheet>
   );
-}
+};
 
 interface FilterContainerProps {
   category: keyof FilterAttributes;
@@ -125,36 +115,24 @@ interface FilterContainerProps {
   setAttrFilter: (attrFilter: FilterAttributes) => void;
 }
 
-function FilterContainer({
-  category,
-  attrData,
-  attrFilter,
-  setAttrFilter,
-}: FilterContainerProps) {
-  return (
-    <div>
-      <span className="text-xl capitalize text-[#BBB9B2] md:text-2xl">
-        {category}
-      </span>
-      <div className="mt-5 grid grid-cols-3 gap-3">
-        {attrData.map((attr) => (
-          <FilterButton
-            key={attr}
-            attr={attr}
-            category={category}
-            attrFilter={attrFilter}
-            setAttrFilter={setAttrFilter}
-          />
-        ))}
-      </div>
+const FilterContainer = ({ category, attrData, attrFilter, setAttrFilter }: FilterContainerProps) => (
+  <div>
+    <span className="text-xl capitalize text-[#BBB9B2] md:text-2xl">{category}</span>
+    <div className="mt-5 grid grid-cols-3 gap-3">
+      {attrData.map((attr) => (
+        <FilterButton
+          key={attr}
+          attr={attr}
+          category={category}
+          attrFilter={attrFilter}
+          setAttrFilter={setAttrFilter}
+        />
+      ))}
     </div>
-  );
-}
+  </div>
+);
 
-function isEqualFilters(
-  aFilters: FilterAttributes,
-  bFilters: FilterAttributes,
-) {
-  const filterKeys = Object.keys(aFilters) as (keyof FilterAttributes)[];
+function isEqualFilters(aFilters: FilterAttributes, bFilters: FilterAttributes) {
+  const filterKeys = Object.keys(aFilters) as Array<keyof FilterAttributes>;
   return filterKeys.every((key) => isEqualSets(aFilters[key], bFilters[key]));
 }

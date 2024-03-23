@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useFilteredCharacters } from "@/hooks/use-characters";
-import { CharacterCard } from "@/components/card-templates";
+import { CharacterCard } from '@/components/card-templates';
+import { useFilteredCharacters } from '@/hooks/use-characters';
 
 interface CharacterListProps {}
 
-export function CharacterList({}: CharacterListProps) {
+export const CharacterList = ({}: CharacterListProps) => {
   const filteredCharacters = useFilteredCharacters();
 
   return (
@@ -15,4 +15,4 @@ export function CharacterList({}: CharacterListProps) {
       ))}
     </div>
   );
-}
+};

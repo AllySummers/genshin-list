@@ -1,21 +1,16 @@
-import { Provider as JotaiProvider } from "jotai";
+import { Provider as JotaiProvider } from 'jotai';
 
-import { getCharacterMaterialInfo } from "@/backend/requests";
-import type { MaterialCount } from "@/data/types";
-import { sortStringAsNumber } from "@/lib/utils";
-import { HydrateMaterialAtoms } from "@/components/hydrate-materials";
-import { formatAscension } from "@/components/icons";
+import { getCharacterMaterialInfo } from '@/backend/requests';
+import { HydrateMaterialAtoms } from '@/components/hydrate-materials';
+import { formatAscension } from '@/components/icons';
+import type { MaterialCount } from '@/data/types';
+import { sortStringAsNumber } from '@/lib/utils';
 
-interface MaterialProviderProps
-  extends React.ComponentProps<typeof JotaiProvider> {
+interface MaterialProviderProps extends React.ComponentProps<typeof JotaiProvider> {
   name: string;
 }
 
-export function MaterialProvider({
-  name,
-  children,
-  ...props
-}: MaterialProviderProps) {
+export const MaterialProvider = ({ name, children, ...props }: MaterialProviderProps) => {
   const materials = getCharacterMaterialInfo(name);
   const [levelOptions, levelMats] = getOptionsMats(materials.costs.levels);
   const [talentOptions, talentMats] = getOptionsMats(materials.costs.talents);
@@ -33,19 +28,17 @@ export function MaterialProvider({
       </HydrateMaterialAtoms>
     </JotaiProvider>
   );
-}
+};
 
 function getOptionsMats(materialCosts: MaterialCount) {
-  const keys = Object.keys(materialCosts).sort((a, b) =>
-    sortStringAsNumber(a, b),
-  );
+  const keys = Object.keys(materialCosts).sort((a, b) => sortStringAsNumber(a, b));
 
   const options = keys.map((key, idx) => {
-    if (key.endsWith("+")) {
+    if (key.endsWith('+')) {
       const strippedKey = key.slice(0, -1);
       return {
         label: formatAscension(strippedKey),
-        value: idx,
+        value: idx
       } as const;
     }
     return { label: key, value: idx } as const;

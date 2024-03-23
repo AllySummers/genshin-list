@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useAttrFilter } from "@/hooks/use-characters";
-import { FilterSheet } from "@/components/filters/filter-sheet";
-import { ReverseBtn } from "@/components/filters/reverse-button";
-import { Search } from "@/components/filters/search-filter";
-import { SelectedFilters } from "@/components/filters/selected-filters";
-import { SortDropdown } from "@/components/filters/sort-filter";
+import { FilterSheet } from '@/components/filters/filter-sheet';
+import { ReverseBtn } from '@/components/filters/reverse-button';
+import { Search } from '@/components/filters/search-filter';
+import { SelectedFilters } from '@/components/filters/selected-filters';
+import { SortDropdown } from '@/components/filters/sort-filter';
+import { useAttrFilter } from '@/hooks/use-characters';
 
-type FilterHubProps = {};
+interface FilterHubProps {}
 
-export function FilterHub({}: FilterHubProps) {
+export const FilterHub = ({}: FilterHubProps) => {
   const [attrFilter, setAttrFilter] = useAttrFilter();
 
   return (
@@ -21,11 +21,7 @@ export function FilterHub({}: FilterHubProps) {
         <FilterSheet className="flex w-full sm:hidden" />
         <ReverseBtn className="w-full" />
       </div>
-      <SelectedFilters
-        attrFilter={attrFilter}
-        setAttrFilter={setAttrFilter}
-        className="col-span-full mx-auto w-full"
-      />
+      <SelectedFilters attrFilter={attrFilter} setAttrFilter={setAttrFilter} className="col-span-full mx-auto w-full" />
     </div>
   );
-}
+};
