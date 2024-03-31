@@ -10,7 +10,7 @@ interface IconImageProps {
   invert?: boolean;
 }
 
-const IconImage = ({ src, alt, className, imageClassName, invert = false }: IconImageProps) => (
+export const IconImage = ({ src, alt, className, imageClassName, invert = false }: IconImageProps) => (
   <div className={cn('relative block', className)}>
     <Image
       alt={alt}
@@ -21,5 +21,3 @@ const IconImage = ({ src, alt, className, imageClassName, invert = false }: Icon
     />
   </div>
 );
-
-export { IconImage };

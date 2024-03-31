@@ -1,70 +1,52 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export function myRound(num: number, precision: number) {
+export const myRound = (num: number, precision: number) => {
   const multiplier = 10 ** precision;
   return Math.round((num + Number.EPSILON) * multiplier) / multiplier;
-}
+};
 
-export function formatNameUrl(name: string) {
-  return name.toLowerCase().replace(/\s/g, '-');
-}
+export const formatNameUrl = (name: string) => name.toLowerCase().replace(/\s/g, '-');
 
-export function unformatNameUrl(nameUrl: string) {
-  return nameUrl.replace(/-/g, ' ');
-}
+export const unformatNameUrl = (nameUrl: string) => nameUrl.replace(/-/g, ' ');
 
-export function formatImageUrl(url: string) {
+export const formatCloudinaryUrl = (url: string) =>
+  `https://res.cloudinary.com/genshin/image/upload/sprites/${url}.png`;
+
+export const formatAmbrUrl = (url: string) => `https://api.ambr.top/assets/UI/${url}.png`;
+
+export const formatImageUrl = (url: string) =>
   // control where all images are retrieved from
   // do not retrieve images from "mihoyo.com" (it sends cookies)
-  return formatAmbrUrl(url);
-}
+  formatAmbrUrl(url);
 
-export function formatCloudinaryUrl(url: string) {
-  return `https://res.cloudinary.com/genshin/image/upload/sprites/${url}.png`;
-}
+export const formatLocalImageUrl = (dir: '/' | '/elements' | '/weapons', imageFile: string) =>
+  `/images${dir}/${imageFile.toLowerCase()}.png`;
 
-export function formatAmbrUrl(url: string) {
-  return `https://api.ambr.top/assets/UI/${url}.png`;
-}
-
-export function formatLocalImageUrl(dir: '/' | '/elements' | '/weapons', imageFile: string) {
-  return `/images${dir}/${imageFile.toLowerCase()}.png`;
-}
-
-export function formatLongNumber(value: bigint | number) {
-  return Intl.NumberFormat('en-US', {
+export const formatLongNumber = (value: bigint | number) =>
+  Intl.NumberFormat('en-US', {
     notation: 'compact',
     compactDisplay: 'short',
     maximumFractionDigits: 2
   }).format(value);
-}
 
-export function sortString(a: string, b: string) {
-  return a.localeCompare(b);
-}
+export const sortString = (a: string, b: string) => a.localeCompare(b);
 
-export function sortNumber(a: number, b: number) {
-  return a - b;
-}
+export const sortNumber = (a: number, b: number) => a - b;
 
-export function sortStringAsNumber(a: string, b: string) {
-  return a.localeCompare(b, undefined, {
+export const sortStringAsNumber = (a: string, b: string) =>
+  a.localeCompare(b, undefined, {
     numeric: true,
     sensitivity: 'base'
   });
-}
 
-export function isEqualSets(a: Set<unknown>, b: Set<unknown>) {
+export const isEqualSets = (a: Set<unknown>, b: Set<unknown>) => {
   if (a === b) return true;
   if (a.size !== b.size) return false;
   return Array.from(a).every((x) => b.has(x));
-}
+};
 
-export function pick<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
-  return Object.fromEntries(keys.filter((key) => key in obj).map((key) => [key, obj[key]])) as Pick<T, K>;
-}
+export const pick = <T extends object, K extends keyof T>(obj: T, ...keys: K[]) =>
+  Object.fromEntries(keys.filter((key) => key in obj).map((key) => [key, obj[key]])) as Pick<T, K>;

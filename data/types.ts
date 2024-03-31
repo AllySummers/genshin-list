@@ -4,19 +4,19 @@ import type {
   formatCharacterFilter,
   formatConstellations,
   formatMaterial,
-  formatPassives,
-} from "@/backend/format";
-import type { getCharacterMaterialInfo } from "@/backend/requests";
-import type { Item } from "@/backend/schema";
-import {
+  formatPassives
+} from '@/backend/format';
+import type { getCharacterMaterialInfo } from '@/backend/requests';
+import type { Item } from '@/backend/schema';
+import type {
   CHARACTER_RARITIES,
   ELEMENTS,
   getInitialFilterAttributes,
   ITEM_RARITIES,
   REGIONS,
   WEAPONS,
-  WEEKDAYS,
-} from "@/data/constants";
+  WEEKDAYS
+} from '@/data/constants';
 
 export type Element = (typeof ELEMENTS)[number];
 export type Weapon = (typeof WEAPONS)[number];
@@ -28,14 +28,10 @@ export type Weekday = (typeof WEEKDAYS)[number];
 export type Character = ReturnType<typeof formatCharacter>;
 
 export type CharacterFilter = ReturnType<typeof formatCharacterFilter>;
-export type CharacterSortKeys = keyof Omit<CharacterFilter, "id" | "icon">;
+export type CharacterSortKeys = keyof Omit<CharacterFilter, 'icon' | 'id'>;
 
 export type Active = ReturnType<typeof formatActives>[number];
-export type ActiveCategory =
-  | "Normal Attack"
-  | "Elemental Skill"
-  | "Elemental Burst"
-  | "Alternate Sprint";
+export type ActiveCategory = 'Alternate Sprint' | 'Elemental Burst' | 'Elemental Skill' | 'Normal Attack';
 export type Passive = ReturnType<typeof formatPassives>[number];
 export type Constellation = ReturnType<typeof formatConstellations>[number];
 
@@ -44,5 +40,5 @@ export type MaterialInfo = Record<string, Material>; // Material name to Materia
 export type MaterialCount = Record<string, Item[]>; // Material name to Item
 export type AllMaterialInfo = ReturnType<typeof getCharacterMaterialInfo>;
 
-export type FilterAttribute = Element | Weapon | Region | CharacterRarity;
+export type FilterAttribute = CharacterRarity | Element | Region | Weapon;
 export type FilterAttributes = ReturnType<typeof getInitialFilterAttributes>;

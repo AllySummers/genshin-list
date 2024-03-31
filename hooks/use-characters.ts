@@ -1,34 +1,28 @@
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-import { getInitialFilterAttributes } from "@/data/constants";
-import type {
-  CharacterFilter,
-  CharacterSortKeys,
-  FilterAttributes,
-} from "@/data/types";
-import { sortString, sortStringAsNumber } from "@/lib/utils";
-import type { DropdownOption } from "@/components/ui/dropdown-menu";
-import { sortOptions } from "@/components/filters/sort-filter";
+import { sortOptions } from '@/components/filters/sort-filter';
+import type { DropdownOption } from '@/components/ui/dropdown-menu';
+import { getInitialFilterAttributes } from '@/data/constants';
+import type { CharacterFilter, CharacterSortKeys, FilterAttributes } from '@/data/types';
+import { sortString, sortStringAsNumber } from '@/lib/utils';
 
-const sortFunctions: Record<
-  CharacterSortKeys,
-  (a: string, b: string) => number
-> = {
+const sortFunctions: Record<CharacterSortKeys, (a: string, b: string) => number> = {
   name: sortString,
   weapon: sortString,
   element: sortString,
   region: sortString,
   rarity: sortStringAsNumber,
-  version: sortStringAsNumber,
+  version: sortStringAsNumber
 } as const;
 
-const searchQueryAtom = atom("");
+const searchQueryAtom = atom('');
 const sortOptionAtom = atom<DropdownOption<CharacterSortKeys>>(
-  sortOptions[0] ?? { label: "Version", value: "version" },
+  sortOptions[0] ?? { label: 'Version', value: 'version' }
 );
 const isReversedAtom = atom(true);
 const attrFilterAtom = atom<FilterAttributes>(getInitialFilterAttributes());
 export const charactersAtom = atom<CharacterFilter[]>([]); // hydrate
+
 const filteredCharactersAtom = atom((get) => {
   const characters = get(charactersAtom);
   const attrFilter = get(attrFilterAtom);
@@ -48,39 +42,21 @@ const filteredCharactersAtom = atom((get) => {
 
           const characterValue = character[key as keyof CharacterFilter];
           return (filterSet as Set<unknown>).has(characterValue);
-        }),
+        })
     )
-    .sort(
-      isReversed
-        ? (b, a) => sortFunction(a[sortKey], b[sortKey])
-        : (a, b) => sortFunction(a[sortKey], b[sortKey]),
-    );
+    .sort(isReversed ? (b, a) => sortFunction(a[sortKey], b[sortKey]) : (a, b) => sortFunction(a[sortKey], b[sortKey]));
 });
 
-export function useSearchQuery() {
-  return useAtom(searchQueryAtom);
-}
+export const useSearchQuery = () => useAtom(searchQueryAtom);
 
-export function useSortOption() {
-  return useAtom(sortOptionAtom);
-}
+export const useSortOption = () => useAtom(sortOptionAtom);
 
-export function useIsReversed() {
-  return useAtom(isReversedAtom);
-}
+export const useIsReversed = () => useAtom(isReversedAtom);
 
-export function useSetIsReversed() {
-  return useSetAtom(isReversedAtom);
-}
+export const useSetIsReversed = () => useSetAtom(isReversedAtom);
 
-export function useAttrFilter() {
-  return useAtom(attrFilterAtom);
-}
+export const useAttrFilter = () => useAtom(attrFilterAtom);
 
-export function useCharacters() {
-  return useAtom(charactersAtom);
-}
+export const useCharacters = () => useAtom(charactersAtom);
 
-export function useFilteredCharacters() {
-  return useAtomValue(filteredCharactersAtom);
-}
+export const useFilteredCharacters = () => useAtomValue(filteredCharactersAtom);

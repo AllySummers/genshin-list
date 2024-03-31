@@ -27,14 +27,14 @@ interface HydrateAtomsProps {
   children: ReactNode;
 }
 
-export function HydrateMaterialAtoms({
+export const HydrateMaterialAtoms = ({
   materials,
   levelOptions,
   levelMats,
   talentOptions,
   talentMats,
   children
-}: HydrateAtomsProps) {
+}: HydrateAtomsProps) => {
   useHydrateAtoms([
     [materialNameToInfoAtom, materials.nameToInfo],
     [levelOptionsAtom, levelOptions],
@@ -47,4 +47,4 @@ export function HydrateMaterialAtoms({
     [burstMaxAtom, talentOptions.length - 1]
   ]);
   return children;
-}
+};

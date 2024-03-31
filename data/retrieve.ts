@@ -3,32 +3,20 @@ import {
   getCharacterInfo,
   getCharacterNames,
   getConstellationInfo,
-  getTalentInfo,
-} from "@/backend/requests";
-import { sortString, sortStringAsNumber } from "@/lib/utils";
+  getTalentInfo
+} from '@/backend/requests';
+import { sortString, sortStringAsNumber } from '@/lib/utils';
 
-export function getNamePageProps(name: string) {
-  const characterProps = getCharacterInfo(name);
-  const talentProps = getTalentInfo(name);
-  const constellationProps = getConstellationInfo(name);
+export const getNamePageProps = (name: string) => ({
+  character: getCharacterInfo(name),
+  talents: getTalentInfo(name),
+  constellations: getConstellationInfo(name)
+});
 
-  return {
-    character: characterProps,
-    talents: talentProps,
-    constellations: constellationProps,
-  };
-}
-
-export function getAllCharacters() {
-  const characters = getCharacterNames();
-
-  const characterProps = characters.map((name) => {
-    return getCharacterFilterInfo(name);
-  });
-
-  return characterProps
+export const getAllCharacters = () =>
+  getCharacterNames()
+    .map((name) => getCharacterFilterInfo(name))
     .sort((a, b) => sortString(a.name, b.name))
     .sort((a, b) => sortString(b.element, a.element))
     .sort((a, b) => sortStringAsNumber(b.version, a.version))
     .sort((a, b) => sortStringAsNumber(b.rarity, a.rarity));
-}

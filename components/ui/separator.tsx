@@ -26,29 +26,31 @@ const DecorativeEndpoint = ({
   />
 );
 
-const Separator = forwardRef<
-  ElementRef<typeof Root>,
-  Omit<ComponentPropsWithoutRef<typeof Root>, 'children'> & {
-    invert?: boolean;
-    lineClassName?: string;
+export const Separator = Object.assign(
+  forwardRef<
+    ElementRef<typeof Root>,
+    Omit<ComponentPropsWithoutRef<typeof Root>, 'children'> & {
+      invert?: boolean;
+      lineClassName?: string;
+    }
+  >(({ className, lineClassName, orientation = 'horizontal', decorative = true, invert = false, ...props }, ref) => (
+    <Root
+      ref={ref}
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(
+        'flex shrink-0 flex-nowrap items-center justify-center',
+        orientation === 'horizontal' ? 'h-min' : 'w-min flex-col',
+        className
+      )}
+      {...props}
+    >
+      <DecorativeEndpoint src="/images/arrow-left.png" orientation={orientation} invert={invert} />
+      <div className={cn('bg-border', orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px', lineClassName)} />
+      <DecorativeEndpoint src="/images/arrow-right.png" orientation={orientation} invert={invert} />
+    </Root>
+  )),
+  {
+    displayName: Root.displayName
   }
->(({ className, lineClassName, orientation = 'horizontal', decorative = true, invert = false, ...props }, ref) => (
-  <Root
-    ref={ref}
-    decorative={decorative}
-    orientation={orientation}
-    className={cn(
-      'flex shrink-0 flex-nowrap items-center justify-center',
-      orientation === 'horizontal' ? 'h-min' : 'w-min flex-col',
-      className
-    )}
-    {...props}
-  >
-    <DecorativeEndpoint src="/images/arrow-left.png" orientation={orientation} invert={invert} />
-    <div className={cn('bg-border', orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px', lineClassName)} />
-    <DecorativeEndpoint src="/images/arrow-right.png" orientation={orientation} invert={invert} />
-  </Root>
-));
-Separator.displayName = Root.displayName;
-
-export { Separator };
+);

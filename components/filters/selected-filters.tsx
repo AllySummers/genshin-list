@@ -2,6 +2,7 @@
 
 import { Trash2 } from 'lucide-react';
 
+import { useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { DragArea } from '@/components/ui/drag-area';
 import { getInitialFilterAttributes } from '@/data/constants';
@@ -43,9 +44,9 @@ export const SelectedFilters = ({
 
   const isEmpty = filterSets.every((filterSet) => filterSet.size === 0);
 
-  function clearFilters() {
+  const clearFilters = useCallback(() => {
     setAttrFilter(getInitialFilterAttributes());
-  }
+  }, [setAttrFilter]);
 
   return (
     !isEmpty && (

@@ -1,6 +1,6 @@
 'use client';
 
-import { Listbox, Transition } from '@headlessui/react';
+import { Listbox, Transition, type ListboxOptionProps, type ListboxOptionsProps } from '@headlessui/react';
 import type { ClassValue } from 'clsx';
 import { Check } from 'lucide-react';
 import React, { Fragment, forwardRef, type ComponentPropsWithoutRef, type ElementRef, type ReactNode } from 'react';
@@ -15,112 +15,118 @@ export interface DropdownOption<T> {
   readonly value: T;
 }
 
-const DropdownMenu = forwardRef<
-  ElementRef<typeof Listbox>,
-  ComponentPropsWithoutRef<typeof Listbox> & {
-    children: ReactNode;
-    className?: ClassValue;
-  }
->(({ className, children, ...props }, ref) => (
-  <Listbox ref={ref} {...props}>
-    <div className={cn('relative', className)}>{children}</div>
-  </Listbox>
-));
-DropdownMenu.displayName = 'DropdownMenu';
+export const DropdownMenu = Object.assign(
+  forwardRef<
+    ElementRef<typeof Listbox>,
+    Omit<ComponentPropsWithoutRef<typeof Listbox>, 'className'> & {
+      children: ReactNode;
+      className?: ClassValue;
+    }
+  >(({ className, children, ...props }, ref) => (
+    <Listbox ref={ref} {...props}>
+      <div className={cn('relative', className)}>{children}</div>
+    </Listbox>
+  )),
+  { displayName: 'DropdownMenu' }
+);
 
-const DropdownMenuTrigger = forwardRef<
-  ElementRef<typeof Button>,
-  ComponentPropsWithoutRef<typeof Button> & {
-    truncate?: boolean;
-  }
->(({ className, truncate = false, children, ...props }, ref) => (
-  <Listbox.Button
-    ref={ref}
-    as={Button}
-    className={cn('w-full justify-between truncate ui-open:shadow-inner ui-open:ring-3', className)}
-    {...props}
-  >
-    <span
-      className={cn(
-        'w-full items-center text-left',
-        truncate ? 'inline-block truncate' : 'flex overflow-hidden whitespace-nowrap'
-      )}
+export const DropdownMenuTrigger = Object.assign(
+  forwardRef<
+    ElementRef<typeof Button>,
+    ComponentPropsWithoutRef<typeof Button> & {
+      truncate?: boolean;
+    }
+  >(({ className, truncate = false, children, ...props }, ref) => (
+    <Listbox.Button
+      ref={ref}
+      as={Button}
+      className={cn('w-full justify-between truncate ui-open:shadow-inner ui-open:ring-3', className)}
+      {...props}
     >
-      {children}
-    </span>
-    <DropdownIcon className="size-7" />
-  </Listbox.Button>
-));
-DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
-
-const DropdownMenuContent = forwardRef<
-  ElementRef<typeof Listbox.Options>,
-  ComponentPropsWithoutRef<typeof Listbox.Options> & {
-    scrollable?: boolean;
-  }
->(({ className, scrollable = false, ...props }, ref) => {
-  const Comp = scrollable ? ScrollArea : 'ul';
-
-  return (
-    <Transition
-      as={Fragment}
-      enter="transition duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      enterTo="transform scale-100 opacity-100"
-      leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
-    >
-      <Listbox.Options
-        ref={ref}
-        as={Comp}
+      <span
         className={cn(
-          'z-50 flex w-full flex-col gap-0.5 overflow-hidden rounded-3xl bg-secondary p-[0.3125rem] text-secondary-foreground shadow-xl ring-1 ring-black/20 focus:outline-none',
-          scrollable ? '!absolute max-h-60 pr-3 sm:max-h-80' : 'absolute',
-          className
+          'w-full items-center text-left',
+          truncate ? 'inline-block truncate' : 'flex overflow-hidden whitespace-nowrap'
         )}
-        {...props}
-      />
-    </Transition>
-  );
-});
-DropdownMenuContent.displayName = 'DropdownMenuContent';
+      >
+        {children}
+      </span>
+      <DropdownIcon className="size-7" />
+    </Listbox.Button>
+  )),
+  { displayName: 'DropdownMenuTrigger' }
+);
 
-const DropdownMenuItem = forwardRef<
-  ElementRef<typeof Listbox.Option>,
-  Omit<ComponentPropsWithoutRef<typeof Listbox.Option>, 'children'> & {
-    innerClassName?: string;
-    checkClassName?: string;
-    children?: ReactNode;
-    size?: keyof typeof buttonSizeClassNames;
-  }
->(({ value, className, innerClassName, checkClassName, children, size = 'default', ...props }, ref) => (
-  <Listbox.Option
-    ref={ref}
-    value={value}
-    className={cn(
-      'flex select-none outline-none',
-      buttonSizeClassNames[size],
-      'p-0', // reset buttonSizeClassNames padding
-      className
-    )}
-    {...props}
-  >
-    <div
+export const DropdownMenuContent = Object.assign(
+  forwardRef<
+    ElementRef<typeof Listbox.Options>,
+    ListboxOptionsProps<'ul'> & {
+      scrollable?: boolean;
+    }
+  >(({ className, scrollable = false, ...props }, ref) => {
+    const Comp = scrollable ? ScrollArea : 'ul';
+
+    return (
+      <Transition
+        as={Fragment}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Listbox.Options
+          ref={ref}
+          as={Comp}
+          className={cn(
+            'z-50 flex w-full flex-col gap-0.5 overflow-hidden rounded-3xl bg-secondary p-[0.3125rem] text-secondary-foreground shadow-xl ring-1 ring-black/20 focus:outline-none',
+            scrollable ? '!absolute max-h-60 pr-3 sm:max-h-80' : 'absolute',
+            className
+          )}
+          {...props}
+        />
+      </Transition>
+    );
+  }),
+  { displayName: 'DropdownMenuContent' }
+);
+
+export const DropdownMenuItem = Object.assign(
+  forwardRef<
+    ElementRef<typeof Listbox.Option>,
+    ListboxOptionProps<'li', unknown> & {
+      innerClassName?: string;
+      checkClassName?: string;
+      children?: ReactNode;
+      size?: keyof typeof buttonSizeClassNames;
+    }
+  >(({ value, className, innerClassName, checkClassName, children, size = 'default', ...props }, ref) => (
+    <Listbox.Option
+      ref={ref}
+      value={value}
       className={cn(
-        'relative flex size-full items-center justify-between rounded-full px-3 transition-colors duration-75',
-        'ui-active:bg-secondary-hover ui-active:active:bg-primary ui-active:active:text-primary-foreground',
-        innerClassName
+        'flex select-none outline-none',
+        buttonSizeClassNames[size],
+        'p-0', // reset buttonSizeClassNames padding
+        className
       )}
+      {...props}
     >
-      {children}
-      <Check
-        className={cn('hidden size-6 ui-selected:flex', size === 'small' && 'size-5', checkClassName)}
-        strokeWidth={4}
-      />
-    </div>
-  </Listbox.Option>
-));
-DropdownMenuItem.displayName = 'DropdownMenuItem';
-
-export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger };
+      <div
+        className={cn(
+          'relative flex size-full items-center justify-between rounded-full px-3 transition-colors duration-75',
+          'ui-active:bg-secondary-hover ui-active:active:bg-primary ui-active:active:text-primary-foreground',
+          innerClassName
+        )}
+      >
+        {children}
+        <Check
+          className={cn('hidden size-6 ui-selected:flex', size === 'small' && 'size-5', checkClassName)}
+          strokeWidth={4}
+        />
+      </div>
+    </Listbox.Option>
+  )),
+  { displayName: 'DropdownMenuItem' }
+);

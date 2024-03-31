@@ -46,10 +46,8 @@ const FilterContainer = ({ category, attrData, attrFilter, setAttrFilter }: Filt
   </div>
 );
 
-function isEqualFilters(aFilters: FilterAttributes, bFilters: FilterAttributes) {
-  const filterKeys = Object.keys(aFilters) as Array<keyof FilterAttributes>;
-  return filterKeys.every((key) => isEqualSets(aFilters[key], bFilters[key]));
-}
+const isEqualFilters = (aFilters: FilterAttributes, bFilters: FilterAttributes) =>
+  (Object.keys(aFilters) as Array<keyof FilterAttributes>).every((key) => isEqualSets(aFilters[key], bFilters[key]));
 
 interface FilterSheetProps {
   className?: string;

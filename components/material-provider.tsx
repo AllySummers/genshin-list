@@ -11,6 +11,24 @@ interface MaterialProviderProps extends ComponentProps<typeof JotaiProvider> {
   name: string;
 }
 
+const getOptionsMats = (materialCosts: MaterialCount) => {
+  const keys = Object.keys(materialCosts).sort((a, b) => sortStringAsNumber(a, b));
+
+  const options = keys.map((key, idx) => {
+    if (key.endsWith('+')) {
+      const strippedKey = key.slice(0, -1);
+      return {
+        label: formatAscension(strippedKey),
+        value: idx
+      } as const;
+    }
+    return { label: key, value: idx } as const;
+  });
+
+  const materials = keys.map((key) => materialCosts[key]!);
+  return [options, materials] as const;
+};
+
 export const MaterialProvider = ({ name, children, ...props }: MaterialProviderProps) => {
   const materials = getCharacterMaterialInfo(name);
   const [levelOptions, levelMats] = getOptionsMats(materials.costs.levels);
@@ -30,21 +48,3 @@ export const MaterialProvider = ({ name, children, ...props }: MaterialProviderP
     </JotaiProvider>
   );
 };
-
-function getOptionsMats(materialCosts: MaterialCount) {
-  const keys = Object.keys(materialCosts).sort((a, b) => sortStringAsNumber(a, b));
-
-  const options = keys.map((key, idx) => {
-    if (key.endsWith('+')) {
-      const strippedKey = key.slice(0, -1);
-      return {
-        label: formatAscension(strippedKey),
-        value: idx
-      } as const;
-    }
-    return { label: key, value: idx } as const;
-  });
-
-  const materials = keys.map((key) => materialCosts[key]!);
-  return [options, materials] as const;
-}

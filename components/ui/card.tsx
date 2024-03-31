@@ -21,11 +21,13 @@ interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof 
   asChild?: boolean;
 }
 
-const Card = ({ className, hover, asChild = false, ...props }: CardProps) => {
-  const Comp = asChild ? Slot : 'div';
-  return <Comp className={cn(cardVariants({ hover, className }))} {...props} />;
-};
-Card.displayName = 'Card';
+export const Card = Object.assign(
+  ({ className, hover, asChild = false, ...props }: CardProps) => {
+    const Comp = asChild ? Slot : 'div';
+    return <Comp className={cn(cardVariants({ hover, className }))} {...props} />;
+  },
+  { displayName: 'Card' }
+);
 
 const cardImageVariants = cva(
   'relative flex items-center justify-center overflow-hidden rounded-br-[1.25rem] border-b border-transparent',
@@ -51,22 +53,24 @@ interface CardImageProps
   imageClassName?: string;
 }
 
-const CardImage = ({ className, imageClassName, alt, gradient, children, ...props }: CardImageProps) => (
-  <div className={cn(cardImageVariants({ gradient, className }))}>
-    <Image alt="" src={CardBG} fill unoptimized className="pointer-events-none" />
-    <Image className={cn(imageClassName)} alt={alt} {...props} />
-    {children}
-  </div>
-);
-CardImage.displayName = 'CardImage';
-
-const CardLabel = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className="relative w-full px-2 py-0.5" {...props}>
-    <span className={cn('relative block w-full truncate text-center capitalize text-card-foreground', className)}>
+export const CardImage = Object.assign(
+  ({ className, imageClassName, alt, gradient, children, ...props }: CardImageProps) => (
+    <div className={cn(cardImageVariants({ gradient, className }))}>
+      <Image alt="" src={CardBG} fill unoptimized className="pointer-events-none" />
+      <Image className={cn(imageClassName)} alt={alt} {...props} />
       {children}
-    </span>
-  </div>
+    </div>
+  ),
+  { displayName: 'CardImage' }
 );
-CardLabel.displayName = 'CardLabel';
 
-export { Card, CardImage, CardLabel };
+export const CardLabel = Object.assign(
+  ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
+    <div className="relative w-full px-2 py-0.5" {...props}>
+      <span className={cn('relative block w-full truncate text-center capitalize text-card-foreground', className)}>
+        {children}
+      </span>
+    </div>
+  ),
+  { displayName: 'CardLabel' }
+);

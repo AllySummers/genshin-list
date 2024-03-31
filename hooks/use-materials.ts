@@ -30,6 +30,46 @@ const burstMinAtom = atom(0);
 export const burstMaxAtom = atom(9);
 
 // MATERIALS
+const calculateMaterialsRange = (
+  costs: Item[][],
+  start: number, // min is 0
+  end: number // max is len of array (not max index)
+) => {
+  const materials: Record<string, number> = {};
+
+  if (start < end) {
+    for (const value of costs.slice(start + 1, end + 1)) {
+      for (const { name, count } of value) {
+        if (count > 0) {
+          if (materials.hasOwnProperty(name)) {
+            materials[name] += count;
+          } else {
+            materials[name] = count;
+          }
+        }
+      }
+    }
+  }
+
+  return materials;
+};
+
+const mergeMaterials = (...materials: Array<Record<string, number>>) => {
+  const merged: Record<string, number> = {};
+
+  materials.forEach((material) => {
+    for (const [name, count] of Object.entries(material)) {
+      if (merged.hasOwnProperty(name)) {
+        merged[name] += count;
+      } else {
+        merged[name] = count;
+      }
+    }
+  });
+
+  return merged;
+};
+
 const characterMaterialsAtom = atom((get) =>
   calculateMaterialsRange(get(levelMatsAtom), get(levelMinAtom), get(levelMaxAtom))
 );
@@ -73,46 +113,6 @@ const calculatedMaterialsAtom = atom((get) => {
   );
 });
 
-function calculateMaterialsRange(
-  costs: Item[][],
-  start: number, // min is 0
-  end: number // max is len of array (not max index)
-) {
-  const materials: Record<string, number> = {};
-
-  if (start < end) {
-    for (const value of costs.slice(start + 1, end + 1)) {
-      for (const { name, count } of value) {
-        if (count > 0) {
-          if (materials.hasOwnProperty(name)) {
-            materials[name] += count;
-          } else {
-            materials[name] = count;
-          }
-        }
-      }
-    }
-  }
-
-  return materials;
-}
-
-function mergeMaterials(...materials: Array<Record<string, number>>) {
-  const merged: Record<string, number> = {};
-
-  materials.forEach((material) => {
-    for (const [name, count] of Object.entries(material)) {
-      if (merged.hasOwnProperty(name)) {
-        merged[name] += count;
-      } else {
-        merged[name] = count;
-      }
-    }
-  });
-
-  return merged;
-}
-
 // STATE TEMPLATE SETTERS
 const setNoLevelsAtom = atom(null, (_get, set) => {
   set(levelMinAtom, 0);
@@ -140,62 +140,32 @@ const setMaxLevelsAtom = atom(null, (get, set) => {
 });
 
 // HOOK FUNCTIONS
-export function useMaterialNameToInfo() {
-  return useAtomValue(materialNameToInfoAtom);
-}
+export const useMaterialNameToInfo = () => useAtomValue(materialNameToInfoAtom);
 
-export function useLevelOptions() {
-  return useAtomValue(levelOptionsAtom);
-}
+export const useLevelOptions = () => useAtomValue(levelOptionsAtom);
 
-export function useLevelMin() {
-  return useAtom(levelMinAtom);
-}
+export const useLevelMin = () => useAtom(levelMinAtom);
 
-export function useLevelMax() {
-  return useAtom(levelMaxAtom);
-}
+export const useLevelMax = () => useAtom(levelMaxAtom);
 
-export function useTalentOptions() {
-  return useAtomValue(talentOptionsAtom);
-}
+export const useTalentOptions = () => useAtomValue(talentOptionsAtom);
 
-export function useAttackMin() {
-  return useAtom(attackMinAtom);
-}
+export const useAttackMin = () => useAtom(attackMinAtom);
 
-export function useAttackMax() {
-  return useAtom(attackMaxAtom);
-}
+export const useAttackMax = () => useAtom(attackMaxAtom);
 
-export function useSkillMin() {
-  return useAtom(skillMinAtom);
-}
+export const useSkillMin = () => useAtom(skillMinAtom);
 
-export function useSkillMax() {
-  return useAtom(skillMaxAtom);
-}
+export const useSkillMax = () => useAtom(skillMaxAtom);
 
-export function useBurstMin() {
-  return useAtom(burstMinAtom);
-}
+export const useBurstMin = () => useAtom(burstMinAtom);
 
-export function useBurstMax() {
-  return useAtom(burstMaxAtom);
-}
+export const useBurstMax = () => useAtom(burstMaxAtom);
 
-export function useCalculatedMaterials() {
-  return useAtomValue(calculatedMaterialsAtom);
-}
+export const useCalculatedMaterials = () => useAtomValue(calculatedMaterialsAtom);
 
-export function useSetNoLevels() {
-  return useSetAtom(setNoLevelsAtom);
-}
+export const useSetNoLevels = () => useSetAtom(setNoLevelsAtom);
 
-export function useSetRecommendedLevels() {
-  return useSetAtom(setRecommendedLevelsAtom);
-}
+export const useSetRecommendedLevels = () => useSetAtom(setRecommendedLevelsAtom);
 
-export function useSetMaxLevels() {
-  return useSetAtom(setMaxLevelsAtom);
-}
+export const useSetMaxLevels = () => useSetAtom(setMaxLevelsAtom);

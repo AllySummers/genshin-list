@@ -11,7 +11,7 @@ interface HydrateAtomsProps {
   children: ReactNode;
 }
 
-export function HydrateCharacterAtoms({ characters, children }: HydrateAtomsProps) {
+export const HydrateCharacterAtoms = ({ characters, children }: HydrateAtomsProps) => {
   useHydrateAtoms([[charactersAtom, characters]]);
   return children;
-}
+};
