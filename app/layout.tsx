@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 
@@ -8,7 +9,6 @@ import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { siteConfig } from '@/data/site';
 import { genshinFont } from '@/lib/fonts';
-
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -66,6 +66,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
         </div>
       </ThemeProvider>
       <SpeedInsights />
+      <Analytics />
     </body>
   </html>
 );
