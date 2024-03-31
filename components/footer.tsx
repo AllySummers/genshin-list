@@ -7,7 +7,7 @@ export const Footer = () => (
     </p>
     <p>
       Designed & Developed by <br className="sm:hidden" />
-      swelden -{' '}
+      Ally S (forked from swelden's project) -{' '}
       <a
         href={siteConfig.links.github}
         rel="noopener noreferrer"
