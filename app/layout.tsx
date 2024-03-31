@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 
 import type { ReactNode } from 'react';
@@ -64,6 +65,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
           <Footer />
         </div>
       </ThemeProvider>
+      <SpeedInsights />
     </body>
   </html>
 );

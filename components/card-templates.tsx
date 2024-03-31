@@ -19,12 +19,14 @@ export const CharacterCard = ({ character, size }: CharacterCardProps) => (
         gradient={character.rarity === '5' ? 'gold' : 'purple'}
         width={size}
         height={size}
+        quality={100}
       >
         <div className="absolute left-0.5 top-0.5">
           <IconImage
             src={formatLocalImageUrl('/elements', character.element)}
             alt={character.element}
             className="size-[1.875rem]"
+            quality={100}
           />
         </div>
       </CardImage>
@@ -40,9 +42,10 @@ interface ItemCardProps {
   size: number;
   unoptimized?: boolean;
   shortenLongNumber?: boolean; // format long numbers => 7,050,900 => 7.05M
+  quality?: number;
 }
 
-export const ItemCard = ({ label, src, alt, size, unoptimized = true, shortenLongNumber = true }: ItemCardProps) => {
+export const ItemCard = ({ label, src, alt, size, unoptimized, shortenLongNumber = true, quality }: ItemCardProps) => {
   const formattedLabel = shortenLongNumber && typeof label === 'number' ? formatLongNumber(label) : label;
 
   return (
@@ -50,6 +53,7 @@ export const ItemCard = ({ label, src, alt, size, unoptimized = true, shortenLon
       <CardImage
         src={src}
         alt={alt}
+        quality={quality}
         gradient="default"
         width={size}
         height={size}

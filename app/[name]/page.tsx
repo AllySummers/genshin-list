@@ -35,6 +35,7 @@ const StarRating = ({ rarity }: StarRatingProps) => (
         src={formatLocalImageUrl('/', 'star-rating')}
         alt="Star rating"
         className="size-[1.125rem]"
+        quality={100}
       />
     ))}
   </div>
@@ -52,6 +53,7 @@ const DetailHeader = ({ character }: DetailHeaderProps) => (
           src={formatLocalImageUrl('/elements', character.element)}
           alt={character.element}
           className="size-[4.25rem]"
+          quality={100}
         />
         <div className="flex flex-col py-5 sm:py-4">
           <h1 className="mb-1 text-3xl text-foreground md:text-2xl lg:text-3xl">{character.name}</h1>
@@ -79,7 +81,14 @@ const HeroSection = ({ character }: HeroSectionProps) => (
   <div className="sm:container md:grid">
     <div className="col-span-full row-span-full overflow-hidden sm:overflow-visible md:flex md:items-center md:justify-center md:overflow-hidden">
       <div className="relative -left-1/4 -z-10 flex w-[150%] flex-col items-center justify-center md:left-0 md:w-full">
-        <Image src={formatImageUrl(character.gachaSplash)} alt={character.name} width={1920} height={960} priority />
+        <Image
+          src={formatImageUrl(character.gachaSplash)}
+          alt={character.name}
+          width={1920}
+          height={960}
+          priority
+          quality={100}
+        />
         <div className="absolute bottom-0 z-0 h-24 w-full bg-gradient-to-t from-background" />
       </div>
     </div>

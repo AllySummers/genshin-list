@@ -17,10 +17,10 @@ export const MaterialList = ({}: MaterialListProps) => {
         <div className="w-[5.25rem] lg:w-24" title={material} key={`${material}`}>
           <ItemCard
             label={count}
+            quality={100}
             src={formatImageUrl(materialNameToInfo[material]!.icon)}
             alt={material}
             size={104} // NOTE: make equal to lg:w-[??px] on max system font size
-            unoptimized
           />
         </div>
       ))}

@@ -51,13 +51,14 @@ interface CardImageProps
     Omit<CardImageVariantProps, 'gradient'>,
     Required<Pick<CardImageVariantProps, 'gradient'>> {
   imageClassName?: string;
+  quality?: number;
 }
 
 export const CardImage = Object.assign(
-  ({ className, imageClassName, alt, gradient, children, ...props }: CardImageProps) => (
+  ({ className, imageClassName, alt, gradient, children, quality, ...props }: CardImageProps) => (
     <div className={cn(cardImageVariants({ gradient, className }))}>
-      <Image alt="" src={CardBG} fill unoptimized className="pointer-events-none" />
-      <Image className={cn(imageClassName)} alt={alt} {...props} />
+      <Image quality={quality} alt="" src={CardBG} fill unoptimized className="pointer-events-none" />
+      <Image quality={quality} className={cn(imageClassName)} alt={alt} {...props} />
       {children}
     </div>
   ),

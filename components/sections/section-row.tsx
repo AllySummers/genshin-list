@@ -11,7 +11,7 @@ interface SectionRowProps {
 export const SectionRow = ({ talent, children }: SectionRowProps) => (
   <div className="border-b pb-4 last:border-0 last:pb-0" key={talent.name}>
     <div className="flex items-center gap-2">
-      <IconImage src={formatImageUrl(talent.icon)} alt={talent.name} className="size-12" invert />
+      <IconImage src={formatImageUrl(talent.icon)} alt={talent.name} className="size-12" invert quality={100} />
       <h3 className="text-lg">{talent.name}</h3>
     </div>
     <div

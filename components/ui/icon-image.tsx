@@ -8,15 +8,26 @@ interface IconImageProps {
   className?: string;
   imageClassName?: string;
   invert?: boolean;
+  unoptimized?: boolean;
+  quality?: number;
 }
 
-export const IconImage = ({ src, alt, className, imageClassName, invert = false }: IconImageProps) => (
+export const IconImage = ({
+  src,
+  alt,
+  className,
+  imageClassName,
+  invert = false,
+  unoptimized,
+  quality
+}: IconImageProps) => (
   <div className={cn('relative block', className)}>
     <Image
       alt={alt}
       src={src}
       fill
-      unoptimized // https://vercel.com/docs/image-optimization/limits-and-pricing
+      quality={quality}
+      unoptimized={unoptimized} // https://vercel.com/docs/image-optimization/limits-and-pricing
       className={cn(invert && 'invert dark:filter-none', imageClassName)}
     />
   </div>
