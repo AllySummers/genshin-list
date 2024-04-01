@@ -36,6 +36,7 @@ const StarRating = ({ rarity }: StarRatingProps) => (
         alt="Star rating"
         className="size-[1.125rem]"
         quality={100}
+        unoptimized
       />
     ))}
   </div>
