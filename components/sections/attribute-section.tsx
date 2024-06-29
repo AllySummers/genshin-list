@@ -34,7 +34,7 @@ export function AttributeSection({
             <AttrRow title="Constellation" info={character.constellation} />
             <AttrRow title="Title" info={character.title} />
             <AttrRow title="Region" info={character.region} />
-            {/* <AttrRow title="Element" info={character.element} /> */}
+            <AttrRow title="Element" info={character.element} />
             <AttrRow title="Affiliation" info={character.affiliation} />
             <AttrRow title="English VA" info={character.va.english} />
             <AttrRow title="Version" info={character.version} />
