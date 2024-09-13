@@ -31,7 +31,8 @@ export function formatCloudinaryUrl(url: string) {
 export function formatAmbrUrl(url: string) {
   // ambr.top site having issues - was changed to gi.yatta.top for now
   // return `https://api.ambr.top/assets/UI/${url}.png`;
-  return `https://gi.yatta.top/assets/UI/${url}.png`
+  return `https://gi.yatta.top/assets/UI/${url}.png`;
+  // https://gi.yatta.top/assets/UI/UI_ItemIcon_104141.png
 }
 
 export function formatLocalImageUrl(

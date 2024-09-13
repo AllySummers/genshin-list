@@ -13,6 +13,11 @@ const nextConfig = {
         hostname: "api.ambr.top",
         pathname: "/assets/UI/**",
       },
+      {
+        protocol: "https",
+        hostname: "gi.yatta.top",
+        pathname: "/assets/**"
+      }
     ],
   },
 };
